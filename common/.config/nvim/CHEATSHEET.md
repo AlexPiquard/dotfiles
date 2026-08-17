@@ -99,7 +99,6 @@
 - make gd opens the already visible buffer (even in other tab) (not working for tabs)
 - symlinked subfolders with stow
 - todo-comments errors without the ending ":"
-- https://github.com/numToStr/Comment.nvim
 - disable highlight for color words in comments
 - https://github.com/kosayoda/nvim-lightbulb ? to see available actions
 - https://github.com/rachartier/tiny-code-action.nvim : better way to see actions ? 

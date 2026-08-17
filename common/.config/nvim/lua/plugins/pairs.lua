@@ -1,6 +1,7 @@
 return {
 	{
 		-- Set of operators and textobjects to search/select/edit sandwiched texts.
+		-- keys are : sa, sd and sr
 		"machakann/vim-sandwich",
 		event = "BufReadPost",
 	},
