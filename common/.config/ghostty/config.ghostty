@@ -4,7 +4,7 @@ theme = dark:TokyoNight Moon,light:TokyoNight Day
 # otherwise Ghostty loads "Sans Linear" (spacing=mono) and shapes at MONO=0
 # (1.3.1 bug: hb_font created before setVariations) -> "l" missing top bar.
 font-family = Recursive
-font-size = 10.5
+font-size = 12
 font-variation = MONO=1
 font-variation = CASL=0
 font-variation = wght=600

@@ -12,7 +12,7 @@
         - `./brew/install.sh`
     - using pacman:
         - `sudo pacman -S - < packages.txt`
-- install fonts (`Rec Mono Duotone` and `Symbols Nerd Font Mono`)
+- install fonts (`Recursive` and `Symbols Nerd Font Mono`)
 - symlink dotfiles: `./stow.sh`
 - for mason in nvim :
     - npm : `mise use --global node@latest`
