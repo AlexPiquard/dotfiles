@@ -19,14 +19,8 @@ map("n", "<C-d>", function()
 end)
 map("n", "<C-u>", "<C-u>zz")
 
-map("n", "n", function()
-	vim.cmd([[execute "normal! n"]])
-	vim.cmd("normal! zzzv")
-end)
-map("n", "N", function()
-	vim.cmd([[execute "normal! N"]])
-	vim.cmd("normal! zzzv")
-end)
+map("n", "n", "nzz")
+map("n", "N", "Nzz")
 
 vim.keymap.set("n", "<Esc>", function()
 	-- clear "f" and "t" search of flash if active

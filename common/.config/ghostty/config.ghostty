@@ -21,6 +21,7 @@ font-variation-bold-italic = CASL=1
 font-variation-bold-italic = wght=900
 
 adjust-cursor-thickness = 1
+adjust-box-thickness = 1
 
 clipboard-read = allow
 
