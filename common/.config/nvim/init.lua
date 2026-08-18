@@ -1,7 +1,5 @@
-vim.g.mapleader = " "
-
-require("config.lazy")
 require("options")
+require("config.lazy")
 
 vim.schedule(function()
 	require("mappings")
