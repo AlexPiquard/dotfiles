@@ -1,28 +1,3 @@
-local configurate = function()
-	-- vscode format
-	require("luasnip.loaders.from_vscode").lazy_load({ exclude = vim.g.vscode_snippets_exclude or {} })
-	require("luasnip.loaders.from_vscode").lazy_load({ paths = vim.g.vscode_snippets_path or "" })
-
-	-- snipmate format
-	require("luasnip.loaders.from_snipmate").load()
-	require("luasnip.loaders.from_snipmate").lazy_load({ paths = vim.g.snipmate_snippets_path or "" })
-
-	-- lua format
-	require("luasnip.loaders.from_lua").load()
-	require("luasnip.loaders.from_lua").lazy_load({ paths = vim.g.lua_snippets_path or "" })
-
-	vim.api.nvim_create_autocmd("InsertLeave", {
-		callback = function()
-			if
-				require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
-				and not require("luasnip").session.jump_active
-			then
-				require("luasnip").unlink_current()
-			end
-		end,
-	})
-end
-
 local function get_mini_icon(ctx)
 	if ctx.source_name == "Path" then
 		local is_unknown_type =
@@ -42,20 +17,42 @@ end
 return {
 	-- autocomplete & suggestions
 	"saghen/blink.cmp",
-	version = "*", -- updates at version, not commit
 	event = "BufReadPost",
 
 	dependencies = {
-		"rafamadriz/friendly-snippets",
+		"saghen/blink.lib",
 		{
 			-- snippet plugin
 			"L3MON4D3/LuaSnip",
-			dependencies = "rafamadriz/friendly-snippets",
-			opts = { history = true, updateevents = "TextChanged,TextChangedI" },
-			config = function(_, opts)
-				require("luasnip").config.set_config(opts)
-				configurate()
-			end,
+			dependencies = {
+				"rafamadriz/friendly-snippets",
+				config = function()
+					require("luasnip.loaders.from_vscode").lazy_load()
+					require("luasnip.loaders.from_vscode").lazy_load({
+						paths = { vim.fn.stdpath("config") .. "/snippets" },
+					})
+				end,
+			},
+			build = "make install_jsregexp",
+			opts = {
+				history = true,
+				delete_check_events = "TextChanged",
+			},
+			keys = {
+				{
+					"<A-m>",
+					function()
+						if require("luasnip").jumpable(1) then
+							vim.schedule(function()
+								require("luasnip").jump(1)
+							end)
+							return true
+						end
+					end,
+					mode = { "i", "s" },
+					desc = "Snippet: Jump forward",
+				},
+			},
 		},
 
 		-- adds words from entire project as completions
@@ -65,8 +62,14 @@ return {
 		"xzbdmw/colorful-menu.nvim",
 	},
 
-	opts_extend = { "sources.default" },
+	build = function()
+		-- build the fuzzy matcher, optionally add a timeout to `pwait(timeout_ms)`
+		-- you can use `gb` in `:Lazy` to rebuild the plugin as needed
+		require("build.cmp").build():pwait()
+	end,
 
+	---@module 'blink.cmp'
+	---@type blink.cmp.Config
 	opts = {
 		snippets = { preset = "luasnip" },
 		cmdline = { enabled = true },
@@ -75,7 +78,10 @@ return {
 			implementation = "prefer_rust_with_warning",
 		},
 		sources = {
-			default = { "lazydev", "lsp", "snippets", "buffer", "path", "ripgrep" },
+			default = { "lsp", "snippets", "buffer", "path", "ripgrep" },
+			per_filetype = {
+				lua = { inherit_defaults = true, "lazydev" },
+			},
 			providers = {
 				lsp = {
 					async = true,

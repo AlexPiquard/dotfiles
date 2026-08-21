@@ -7,6 +7,7 @@
   "auto-session": { "branch": "main", "commit": "c8e6139a2e52a38101fecaba6014d7dd75489044" },
   "blink-ripgrep.nvim": { "branch": "main", "commit": "31c92504fd23e708829df46342ad84e5f4bd33a2" },
   "blink.cmp": { "branch": "main", "commit": "78336bc89ee5365633bcf754d93df01678b5c08f" },
+  "blink.lib": { "branch": "main", "commit": "c8fdc12c8a2fab6cf786dd7141a283f8079f902b" },
   "ccc.nvim": { "branch": "main", "commit": "9d1a256e006decc574789dfc7d628ca11644d4c2" },
   "cellular-automaton.nvim": { "branch": "main", "commit": "1606e9d5d04ff254023c3f3c62842d065708d6d3" },
   "colorful-menu.nvim": { "branch": "master", "commit": "196ddf16d5f8fec09ba7f20e6b153aa5188e907b" },

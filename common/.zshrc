@@ -110,3 +110,6 @@ export GST_PLUGIN_PATH="/usr/lib/x86_64-linux-gnu/gstreamer-1.0/"
 
 # deno
 [ -s $HOME/.deno/env ] && . "$HOME/.deno/env"
+
+# linecast
+export WEATHER_UNITS=metric
