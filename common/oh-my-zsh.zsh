@@ -18,11 +18,9 @@ fi
 
 [[ ! -f $ZSH/oh-my-zsh.sh ]] || source $ZSH/oh-my-zsh.sh
 
-brew_dir="/home/linuxbrew/.linuxbrew/share"
-root_dir="/usr/share/zsh/plugins"
+root_dir="/usr/share/"
 
 load_plugin() {
-  [[ -f "$brew_dir/$1" ]] && source "$brew_dir/$1"
   [[ -f "$root_dir/$1" ]] && source "$root_dir/$1"
 }
 

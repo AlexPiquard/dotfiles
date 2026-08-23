@@ -7,11 +7,7 @@
     - `chsh -s $(which zsh)` (or `sudo chsh $USER` in fedora)
     - `sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" `
 - install packages
-    - using brew:
-        - `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-        - `./brew/install.sh`
-    - using pacman:
-        - `sudo pacman -S - < packages.txt`
+    - fedora : `./pkg/install-fedora.sh`
 - install fonts (`Recursive` and `Symbols Nerd Font Mono`)
 - symlink dotfiles: `./stow.sh`
 - for mason in nvim :

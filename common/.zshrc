@@ -32,20 +32,17 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 # jdtls lombok
 export JDTLS_JVM_ARGS="-javaagent:$HOME/.local/share/nvim/mason/packages/jdtls/lombok.jar"
 
-# brew
-[[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]] || eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
 # mise
-[[ ! -f /home/linuxbrew/.linuxbrew/bin/mise ]] || eval "$(/home/linuxbrew/.linuxbrew/bin/mise activate zsh)"
+(( $+commands[mise] )) && eval "$(mise activate zsh)"
 
 # direnv
-eval "$(direnv export zsh)"
+(( $+commands[direnv] )) && eval "$(direnv export zsh)"
 
 # starship
-eval "$(starship init zsh)"
+(( $+commands[starship] )) && eval "$(starship init zsh)"
 
 # fzf
-source <(fzf --zsh)
+(( $+commands[fzf] )) && source <(fzf --zsh)
 
 update_fzf_theme() {
   if [ -f "$HOME/.config/fzf/theme.sh" ]; then
@@ -66,10 +63,7 @@ zle -N fzf-history-wrapper
 bindkey '^R' fzf-history-wrapper
 
 # zoxide
-eval "$(zoxide init zsh)"
-
-# tirith
-[[ ! -f /home/linuxbrew/.linuxbrew/bin/tirith ]] || eval "$(tirith init)"
+(( $+commands[zoxide] )) && eval "$(zoxide init zsh)"
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"

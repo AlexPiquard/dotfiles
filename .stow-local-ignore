@@ -21,7 +21,7 @@ _darcs
 ^/README.*
 ^/LICENSE.*
 ^/COPYING
-^/brew/
+^/pkg/
 
 packages.txt
 stow.sh
