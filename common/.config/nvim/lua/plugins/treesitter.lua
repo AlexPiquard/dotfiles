@@ -16,6 +16,7 @@ local languages = {
 	"yaml",
 	"xml",
 	"zsh",
+	"bash",
 	"regex",
 }
 
