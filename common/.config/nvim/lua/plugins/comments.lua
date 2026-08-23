@@ -2,7 +2,7 @@ return {
 	{
 		-- Highlight, list and search todo comments
 		"folke/todo-comments.nvim",
-		event = "BufReadPre",
+		event = { "BufReadPre", "BufNewFile" },
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = {
 			merge_keywords = false,
@@ -40,7 +40,7 @@ return {
 	{
 		-- Comments supporting treesitter, dot repeat, left-right/up-down motions, hooks, and more
 		"numToStr/Comment.nvim",
-		event = "BufReadPre",
+		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			{
 				"JoosepAlviste/nvim-ts-context-commentstring",

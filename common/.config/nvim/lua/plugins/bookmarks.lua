@@ -4,12 +4,12 @@ return {
 	dependencies = {
 		{ "echasnovski/mini.icons" },
 	},
-	event = "BufReadPost",
+	event = { "BufReadPost", "BufNewFile" },
 	opts = {
 		show_icons = true,
-		leader_key = "q",
+		leader_key = "m",
 		-- per buffer mappings
-		buffer_leader_key = "m",
+		buffer_leader_key = "<nil>",
 		index_keys = "hijklmnopuabcfgqrtwxyz",
 	},
 }

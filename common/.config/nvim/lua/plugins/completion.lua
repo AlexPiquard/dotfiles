@@ -17,7 +17,7 @@ end
 return {
 	-- autocomplete & suggestions
 	"saghen/blink.cmp",
-	event = "BufReadPost",
+	event = { "BufReadPost", "BufNewFile" },
 
 	dependencies = {
 		"saghen/blink.lib",

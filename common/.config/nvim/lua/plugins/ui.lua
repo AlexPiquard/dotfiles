@@ -5,29 +5,7 @@ return {
 		-- buffer name and related info at top right window corner
 		-- TODO: show todo-comments
 		"b0o/incline.nvim",
-		event = "BufReadPost",
-		keys = {
-			{
-				"<A-n>",
-				"<cmd>tabnew<cr>",
-				desc = "New tab",
-			},
-			{
-				"<A-k>",
-				"<cmd>tabclose<cr>",
-				desc = "Close tab",
-			},
-			{
-				"<A-;>",
-				"<cmd>tabnext<cr>",
-				desc = "Next tab",
-			},
-			{
-				"<A-,>",
-				"<cmd>tabprev<cr>",
-				desc = "Previous tab",
-			},
-		},
+		event = { "BufReadPost", "BufNewFile" },
 		config = function()
 			require("incline").setup({
 				highlight = {

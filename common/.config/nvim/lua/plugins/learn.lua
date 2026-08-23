@@ -3,7 +3,7 @@ return {
 		-- Break bad habits, master Vim motions
 		"m4xshen/hardtime.nvim",
 		enabled = false,
-		event = "BufReadPost",
+		event = { "BufReadPost", "BufNewFile" },
 		dependencies = { "MunifTanjim/nui.nvim" },
 		opts = {
 			disabled_filetypes = {
@@ -17,7 +17,7 @@ return {
 		-- personalized command discovery based on your actual usage
 		"kamegoro/tobira.nvim",
 		enabled = false,
-		event = "BufReadPost",
+		event = { "BufReadPost", "BufNewFile" },
 		opts = {},
 	},
 	{

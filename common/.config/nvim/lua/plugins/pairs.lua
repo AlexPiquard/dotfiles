@@ -3,14 +3,14 @@ return {
 		-- Set of operators and textobjects to search/select/edit sandwiched texts.
 		-- keys are : sa, sd and sr
 		"machakann/vim-sandwich",
-		event = "BufReadPost",
+		event = { "BufReadPost", "BufNewFile" },
 	},
 	{
 		-- Auto pairs
 		-- Automatically inserts a matching closing character
 		-- when you type an opening character like `"`, `[`, or `(`.
 		"windwp/nvim-autopairs",
-		event = "BufReadPost",
+		event = { "BufReadPost", "BufNewFile" },
 		opts = {
 			-- alt-e to add the closing thing after word
 			fast_wrap = {},

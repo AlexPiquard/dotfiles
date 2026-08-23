@@ -16,7 +16,7 @@ return {
 	{
 		-- adds smooth, customizable animations to text operations like yank, paste, search, undo/redo, and more.
 		"rachartier/tiny-glimmer.nvim",
-		event = "BufReadPost",
+		event = { "BufReadPost", "BufNewFile" },
 		opts = {
 			overwrite = {
 				search = {
@@ -77,7 +77,7 @@ return {
 	{
 		-- Navigate the code with search labels
 		"folke/flash.nvim",
-		event = "BufReadPost",
+		event = { "BufReadPost", "BufNewFile" },
 		---@type Flash.Config
 		opts = {
 			modes = {
@@ -110,7 +110,7 @@ return {
 	{
 		-- apply neovim indent config from what file already contains (tab, spaces, etc)
 		"NMAC427/guess-indent.nvim",
-		event = "BufReadPre",
+		event = { "BufReadPre", "BufNewFile" },
 		opts = {
 			on_tab_options = {
 				["tabstop"] = 4,

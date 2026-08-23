@@ -64,7 +64,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 return {
 	{
 		"mason-org/mason.nvim",
-		event = "BufReadPre",
+		event = { "BufReadPre", "BufNewFile" },
 		cmd = { "Mason", "MasonInstall", "MasonUpdate" },
 		opts = {
 			-- PATH = "skip",
@@ -109,7 +109,7 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
-		event = "BufReadPre",
+		event = { "BufReadPre", "BufNewFile" },
 		opts = {
 			servers = {
 				stylua = true,

@@ -10,12 +10,12 @@ return {
 	},
 	{
 		"brenoprata10/nvim-highlight-colors",
-		event = "BufReadPost",
+		event = { "BufReadPost", "BufNewFile" },
 		config = true,
 	},
 	{
 		"uga-rosa/ccc.nvim",
-		event = "BufReadPre",
+		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			local ColorInput = require("ccc.input")
 			local convert = require("ccc.utils.convert")
