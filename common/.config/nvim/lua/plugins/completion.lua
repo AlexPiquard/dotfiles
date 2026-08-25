@@ -99,8 +99,11 @@ return {
 					---@type blink-ripgrep.Options
 					opts = {},
 					-- shown last
-					score_offset = -2000,
+					score_offset = -500,
 				},
+				buffer = {
+					score_offset = -1000
+				}
 			},
 		},
 
