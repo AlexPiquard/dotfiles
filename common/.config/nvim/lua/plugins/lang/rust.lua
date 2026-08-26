@@ -1,7 +1,6 @@
 return {
 	{
 		-- Supercharge the rust experience
-		-- use "MasonInstall codelldb" for debugger to work
 		"mrcjkb/rustaceanvim",
 		version = "^8",
 		ft = "rust",
@@ -12,10 +11,7 @@ return {
 				},
 			},
 			server = {
-				on_attach = function(_, bufnr)
-					vim.keymap.set("n", "<leader>dr", function()
-						vim.cmd.RustLsp("debuggables")
-					end, { desc = "Rust Debuggables", buffer = bufnr })
+				on_attach = function(_, _)
 					-- vim.keymap.set("n", "<C-w>e", function()
 					-- 	vim.cmd.RustLsp("explainError")
 					-- end, { silent = true, desc = "Explain rust diagnostics", buffer = bufnr })
@@ -68,10 +64,46 @@ return {
 			local codelldb = vim.fn.exepath("codelldb")
 			local codelldb_lib_ext = io.popen("uname"):read("*l") == "Linux" and ".so" or ".dylib"
 			local library_path = vim.fn.expand("$MASON/opt/lldb/lib/liblldb" .. codelldb_lib_ext)
+
+			-- use codelldb as debugger
 			opts.dap = {
 				adapter = require("rustaceanvim.config").get_codelldb_adapter(codelldb, library_path),
 			}
+
+			-- opts is used here
 			vim.g.rustaceanvim = vim.tbl_deep_extend("keep", vim.g.rustaceanvim or {}, opts or {})
+
+			require("dap").configurations.rust = require("dap").configurations.rust or {}
+			local meson_build_dir = nil
+			table.insert(require("dap").configurations.rust, {
+				type = "codelldb",
+				request = "launch",
+				name = "Meson GTK Rust",
+				program = function()
+					meson_build_dir = vim.fn.input("Build dir: ", "builddir")
+					local name = vim.fn
+						.system(
+							"cargo metadata --no-deps --format-version=1 2>/dev/null | jq -r '.packages[0].name'"
+						)
+						:gsub("%s+", "")
+					if name == "" then
+						name = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+					end
+					return vim.fn.getcwd() .. "/" .. meson_build_dir .. "/cargo-target/debug/" .. name
+				end,
+				cwd = "${workspaceFolder}",
+				env = function()
+					local output = vim.fn.system("meson devenv -C " .. vim.fn.getcwd() .. "/" .. meson_build_dir .. " env 2>/dev/null")
+					local env = {}
+					for line in output:gmatch("[^\r\n]+") do
+						local k, v = line:match("^(%S+)=(.*)")
+						if k then
+							env[k] = v
+						end
+					end
+					return env
+				end,
+			})
 		end,
 	},
 	{
@@ -130,6 +162,7 @@ return {
 					executable_cond = "cargo",
 				},
 				mesonlsp = true,
+				codelldb = true,
 			},
 		},
 	},

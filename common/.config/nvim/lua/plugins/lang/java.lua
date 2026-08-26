@@ -15,6 +15,7 @@ end
 return {
 	{
 		"mfussenegger/nvim-jdtls",
+		dependencies = { "mfussenegger/nvim-dap" },
 		ft = "java",
 	},
 	{
@@ -31,11 +32,23 @@ return {
 
 			local jdtlsCmd = { "jdtls", "--java-executable", jdk_latest }
 
+			local bundles = {
+				vim.fn.glob(
+					vim.fn.stdpath("data") .. "/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin-*.jar"
+				),
+			}
+
 			local config = {
 				servers = {
 					jdtls = {
 						cmd = jdtlsCmd,
 						settings = {},
+						init_options = {
+							bundles = bundles,
+						},
+						on_attach = function()
+							require("jdtls").setup_dap({ hotcodereplace = "auto" })
+						end,
 					},
 				},
 			}
@@ -61,6 +74,7 @@ return {
 		opts = {
 			ensure_installed = {
 				jdtls = true,
+				["java-debug-adapter"] = true,
 			},
 		},
 	},
