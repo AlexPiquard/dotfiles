@@ -32,7 +32,8 @@ return {
 			opts = {
 				keymaps = {
 					useDefaults = true,
-					disabledDefaults = { "n" },
+					-- disable "n" (nearEoL) and "in/an" (numbers, to use native in/an)
+					disabledDefaults = { "n", "in", "an" },
 				},
 			},
 		},

@@ -5,7 +5,6 @@ return {
 	opts = {
 		excluded_filetypes = {
 			"blink-cmp-menu",
-			"noice",
 			"prompt",
 			"aerial",
 		},

@@ -13,7 +13,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # oh my zsh
 source $HOME/oh-my-zsh.zsh
 
-export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.local/bin:$HOME/bin"
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8

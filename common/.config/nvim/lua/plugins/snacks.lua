@@ -23,14 +23,9 @@ return {
 	opts = {
 		animate = { enabled = true },
 		bigfile = { enabled = true },
+		-- open single files quickly
 		quickfile = { enabled = true },
 		bufdelete = { enabled = true },
-		debug = { enabled = true },
-		notifier = {
-			enabled = true,
-			timeout = 5000,
-			margin = { top = 1, right = 1, bottom = 0 },
-		},
 		picker = {
 			enabled = true,
 			exclude = { "bin" },
@@ -68,7 +63,6 @@ return {
 		-- just indent visual guides
 		indent = { enabled = true },
 		image = { enabled = true },
-		input = { enabled = true },
 	},
 	keys = {
 		{
@@ -123,25 +117,11 @@ return {
 			desc = "Buffers",
 		},
 		{
-			"<leader>u",
-			function()
-				Snacks.picker.undo()
-			end,
-			desc = "Undo History",
-		},
-		{
 			"<leader>ff",
 			function()
 				Snacks.picker.files()
 			end,
 			desc = "Find Files",
-		},
-		{
-			"<leader>fn",
-			function()
-				Snacks.picker.notifications()
-			end,
-			desc = "Notification History",
 		},
 		{
 			"<leader>fw",
