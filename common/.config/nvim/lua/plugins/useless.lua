@@ -8,7 +8,7 @@ return {
 		dependencies = { "nvzone/volt" },
 		cmd = { "WrappedNvim" },
 		opts = {
-			path = os.getenv("HOME") .. "/.dotfiles/",
+			path = os.getenv("HOME") .. "/dotfiles/",
 		},
 	},
 	{

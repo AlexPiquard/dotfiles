@@ -1,0 +1,14 @@
+nerdfont: true
+
+agent: opencode
+agents:
+  opencode:
+    type: opencode
+    command: opencode --port
+
+panes:
+  - command: <agent>
+  - command: nvim
+    split: horizontal
+    percentage: 70
+    focus: true
