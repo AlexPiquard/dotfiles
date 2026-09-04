@@ -63,6 +63,7 @@ return {
 		-- just indent visual guides
 		indent = { enabled = true },
 		image = { enabled = true },
+		input = { enabled = true },
 	},
 	keys = {
 		{
