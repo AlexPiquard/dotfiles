@@ -2,6 +2,50 @@ local function set_theme(name)
 	vim.cmd("colorscheme " .. name)
 end
 
+-- Background styles for floats and sidebars. Can be "dark", "transparent" or "normal"
+local bg_styles = "dark"
+
+local function derive_colors(colors)
+	local Util = require("tokyonight.util")
+	colors.diff = {
+		add = Util.blend_bg(colors.green2, 0.25),
+		delete = Util.blend_bg(colors.red1, 0.25),
+		change = Util.blend_bg(colors.blue7, 0.15),
+		text = colors.blue7,
+	}
+	colors.git.ignore = colors.dark3
+	colors.black = Util.blend_bg(colors.bg, 0.8, "#000000")
+	colors.border_highlight = Util.blend_bg(colors.blue1, 0.8)
+	colors.border = colors.black
+	colors.bg_popup = colors.bg_dark
+	colors.bg_statusline = colors.bg_dark
+	colors.bg_sidebar = bg_styles == "transparent" and colors.none
+		or bg_styles == "dark" and colors.bg_dark
+		or colors.bg
+	colors.bg_float = bg_styles == "transparent" and colors.none or bg_styles == "dark" and colors.bg_dark or colors.bg
+	colors.bg_visual = Util.blend_bg(colors.blue0, 0.4)
+	colors.bg_search = colors.blue0
+	colors.fg_sidebar = colors.fg_dark
+	colors.fg_float = colors.fg
+	colors.error = colors.red1
+	colors.todo = colors.blue
+	colors.warning = colors.yellow
+	colors.info = colors.blue2
+	colors.hint = colors.teal
+	colors.rainbow = {
+		colors.blue,
+		colors.yellow,
+		colors.green,
+		colors.teal,
+		colors.magenta,
+		colors.purple,
+		colors.orange,
+		colors.red,
+	}
+
+	return colors
+end
+
 -- dark theme colors:
 -- bg = "#222436",
 -- bg_dark = "#1e2030",
@@ -89,8 +133,8 @@ return {
 				keywords = { italic = true },
 				functions = {},
 				variables = {},
-				sidebars = "dark",
-				floats = "dark",
+				sidebars = bg_styles,
+				floats = bg_styles,
 			},
 
 			on_highlights = function(hl, c)
@@ -110,6 +154,8 @@ return {
 					colors.bg_dark = "#d0d5e3"
 					colors.bg_dark1 = "#c1c9df"
 					colors.bg_highlight = "#c4c8da"
+
+					colors = derive_colors(colors)
 				end
 			end,
 		},
