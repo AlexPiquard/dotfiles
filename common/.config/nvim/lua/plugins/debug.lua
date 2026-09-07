@@ -18,15 +18,15 @@ end
 
 return {
 	{
-		-- print debug for variable
-		"rareitems/printer.nvim",
-		config = true,
+		-- insertion of various kinds of log statements
+		"chrisgrieser/nvim-chainsaw",
+		opts = {},
 		keys = {
 			{
 				"gp",
-				"<Plug>(printer_below)",
-				mode = { "n", "x" },
-				desc = "Printer debug",
+				function() require("chainsaw").variableLog() end,
+				mode = { "n" },
+				desc = "Log variable",
 			},
 		},
 	},
