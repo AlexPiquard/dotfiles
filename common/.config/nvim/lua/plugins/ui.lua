@@ -103,6 +103,34 @@ return {
 		end,
 	},
 	{
+		-- cursor line number mode indicator
+		"mawkler/modicator.nvim",
+		event = "VeryLazy",
+		dependencies = "folke/tokyonight.nvim",
+		opts = {
+			-- warn if any required option above is missing. May emit false positives
+			show_warnings = false,
+			highlights = {
+				-- default options for bold/italic
+				defaults = {
+					bold = true,
+					italic = false,
+				},
+				-- use `CursorLine`'s background color for `CursorLineNr`'s background
+				use_cursorline_background = false,
+			},
+			integration = {
+				lualine = {
+					enabled = true,
+					-- letter of lualine section to use (if `nil`, gets detected automatically)
+					mode_section = nil,
+					-- whether to use lualine's mode highlight's foreground or background
+					highlight = "bg",
+				},
+			},
+		},
+	},
+	{
 		-- native Undotree
 		dir = vim.fn.expand("$VIMRUNTIME/pack/dist/opt/nvim.undotree"),
 		name = "nvim.undotree",
