@@ -85,6 +85,8 @@ return {
 			-- PATH = "skip",
 
 			ui = {
+				border = "single",
+				backdrop = 100,
 				icons = {
 					package_pending = " ",
 					package_installed = " ",

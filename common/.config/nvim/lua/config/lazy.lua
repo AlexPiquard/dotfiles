@@ -35,6 +35,8 @@ require("lazy").setup({
 	defaults = { lazy = true },
 
 	ui = {
+		border = "single",
+		backdrop = 100,
 		icons = {
 			ft = "",
 			lazy = "󰂠 ",

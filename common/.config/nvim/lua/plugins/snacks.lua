@@ -1,5 +1,5 @@
 local open_lazygit = function()
-	Snacks.terminal("lazygit", { win = { position = "float" } })
+	Snacks.terminal("lazygit", { win = { position = "float", backdrop = 100 } })
 end
 
 vim.api.nvim_create_autocmd("VimLeavePre", {
