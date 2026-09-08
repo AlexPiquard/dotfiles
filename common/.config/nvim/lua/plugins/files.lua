@@ -16,29 +16,7 @@ local map_split = function(buf_id, lhs, direction)
 	vim.keymap.set("n", lhs, rhs, { buffer = buf_id, desc = desc })
 end
 
--- open grug-far for the selected folder (search and replace)
-local files_grug_far_replace = function()
-	-- works only if cursor is on the valid file system entry
-	local cur_entry_path = MiniFiles.get_fs_entry().path
-	local prefills = { paths = vim.fs.dirname(cur_entry_path) }
-
-	local grug_far = require("grug-far")
-
-	-- instance check
-	if not grug_far.has_instance("explorer") then
-		grug_far.open({
-			instanceName = "explorer",
-			prefills = prefills,
-			staticTitle = "Find and Replace from Explorer",
-		})
-	else
-		grug_far.get_instance("explorer"):open()
-		-- updating the prefills without crealing the search and other fields
-		grug_far.get_instance("explorer"):update_input_values(prefills, false)
-	end
-end
-
--- create mappings for split views and grug-far when files open
+-- create mappings for split views when files open
 vim.api.nvim_create_autocmd("User", {
 	pattern = "MiniFilesBufferCreate",
 	callback = function(args)
@@ -47,9 +25,6 @@ vim.api.nvim_create_autocmd("User", {
 		map_split(buf_id, "<C-h>", "belowright horizontal")
 		map_split(buf_id, "<C-v>", "belowright vertical")
 		map_split(buf_id, "<C-t>", "tab")
-
-		-- mapping for grug-far
-		vim.keymap.set("n", "gs", files_grug_far_replace, { buffer = args.data.buf_id, desc = "Search in directory" })
 	end,
 })
 
