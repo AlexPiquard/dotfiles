@@ -2,19 +2,6 @@ local open_lazygit = function()
 	Snacks.terminal("lazygit", { win = { position = "float", backdrop = 100 } })
 end
 
-vim.api.nvim_create_autocmd("VimLeavePre", {
-	desc = "Close terminals on vim leave",
-	pattern = "*",
-	callback = function()
-		local buffers = vim.api.nvim_list_bufs()
-		for _, bufnr in ipairs(buffers) do
-			if vim.bo[bufnr].buftype == "terminal" then
-				vim.api.nvim_buf_delete(bufnr, { force = true })
-			end
-		end
-	end,
-})
-
 return {
 	"folke/snacks.nvim",
 	priority = 900,

@@ -19,8 +19,8 @@ else
 end
 -- Highlight current line
 o.cursorline = true
--- Only show line number on current line when cursorline is on
-o.cursorlineopt = "number"
+-- Show line and number highlight on current line when cursorline is on
+o.cursorlineopt = "line,number"
 -- Disable line wrapping (horizontal scroll instead)
 o.wrap = false
 -- Disable reports (lines yanked, etc)
@@ -80,15 +80,6 @@ vim.env.PATH = table.concat({ vim.fn.stdpath("data"), "mason", "bin" }, sep) .. 
 -- folds, none by default
 opt.foldmethod = "expr"
 opt.foldlevelstart = 99
--- no fold in diff mode
-vim.api.nvim_create_autocmd("OptionSet", {
-  pattern = "diff",
-  callback = function()
-    if vim.v.option_new then
-      vim.o.foldenable = false
-    end
-  end,
-})
 
 -- overridden by guess-indent.nvim
 -- vim.cmd('set noexpandtab tabstop=2 shiftwidth=0 softtabstop=0 smarttab')
