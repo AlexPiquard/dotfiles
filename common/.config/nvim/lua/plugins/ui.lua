@@ -131,6 +131,52 @@ return {
 		},
 	},
 	{
+		-- Improved UI and workflow for quickfix
+		"stevearc/quicker.nvim",
+		ft = "qf",
+		---@module "quicker"
+		---@type quicker.SetupOptions
+		opts = {
+			keys = {
+				{
+					">",
+					function()
+						require("quicker").expand({ before = 2, after = 2, add_to_existing = true })
+					end,
+					desc = "Expand quickfix context",
+				},
+				{
+					"<",
+					function()
+						require("quicker").collapse()
+					end,
+					desc = "Collapse quickfix context",
+				},
+			},
+			borders = {
+				vert = "│",
+				-- Strong headers separate results from different files
+				strong_header = "─",
+				strong_cross = "┼",
+				strong_end = "┤",
+				-- Soft headers separate results within the same file
+				soft_header = "╌",
+				soft_cross = "┼",
+				soft_end = "┤",
+			},
+		},
+		keys = {
+			{
+				"<leader>q",
+				function()
+					require("quicker").toggle()
+				end,
+				mode = "n",
+				desc = "Toggle quickfix",
+			},
+		},
+	},
+	{
 		-- native Undotree
 		dir = vim.fn.expand("$VIMRUNTIME/pack/dist/opt/nvim.undotree"),
 		name = "nvim.undotree",
