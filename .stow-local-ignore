@@ -21,7 +21,9 @@ _darcs
 ^/README.*
 ^/LICENSE.*
 ^/COPYING
-^/pkg/
+^/pkg
+^/gnome
+^/hypr
 
 packages.txt
 stow.sh

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-stow common
+stow .
 
 if [[ "$XDG_CURRENT_DESKTOP" == *"Hyprland"* ]]; then
     stow hypr
