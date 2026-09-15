@@ -49,8 +49,9 @@ map("n", "<C-l>", "<cmd> TmuxNavigateRight<CR>", { desc = "window right" })
 
 -- Diagnostics
 map("n", "<A-b>", function()
-	vim.diagnostic.jump({ count = 1, float = true })
+	-- no float to show tiny-inline-diagnostic
+	vim.diagnostic.jump({ count = 1, float = false })
 end)
 map("n", "<A-S-b>", function()
-	vim.diagnostic.jump({ count = -1, float = true })
+	vim.diagnostic.jump({ count = -1, float = false })
 end)

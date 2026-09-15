@@ -55,7 +55,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end
 
 		-- "go to references" is mapped in snacks.picker
-		map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts("See available code actions"))
+		map({ "n", "v" }, "<leader>ca", function()
+			require("tiny-code-action").code_action({})
+		end, opts("See available code actions"))
 
 		map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts("Add workspace folder"))
 		map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts("Remove workspace folder"))
@@ -144,5 +146,19 @@ return {
 				end
 			end
 		end,
+	},
+	{
+		-- visualize code actions (the changes)
+		"rachartier/tiny-code-action.nvim",
+		event = "LspAttach",
+		opts = {
+			backend = "vim",
+			picker = {
+				"buffer",
+				opts = {
+					auto_preview = true,
+				},
+			},
+		},
 	},
 }
