@@ -13,6 +13,8 @@ return {
 				"diff",
 				{
 					"diagnostics",
+					-- show diagnostics of the whole project with workspace-diagnostics
+					sources = { "nvim_workspace_diagnostic" },
 					symbols = {
 						error = "󰅙 ",
 						warn = " ",

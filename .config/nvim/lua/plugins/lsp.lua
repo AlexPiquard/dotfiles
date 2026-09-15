@@ -50,6 +50,20 @@ vim.api.nvim_create_autocmd("LspProgress", {
 local map = vim.keymap.set
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		if client then
+			-- workspace-diagnostics
+			if client:supports_method("workspace/diagnostic", args.buf) then
+				vim.lsp.buf.workspace_diagnostics({ client_id = client.id })
+			else
+				require("workspace-diagnostics").populate_workspace_diagnostics(client, args.buf)
+			end
+			-- enable inlay hints if supported
+			if client:supports_method("textDocument/inlayHint") then
+				vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+			end
+		end
+
 		local function opts(desc)
 			return { buffer = args.buf, desc = "LSP " .. desc }
 		end
@@ -67,12 +81,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end, opts("List workspace folders"))
 
 		map("n", "<leader>T", vim.lsp.buf.type_definition, opts("Go to type definition"))
-
-		-- enable inlay hints if supported
-		local client = vim.lsp.get_client_by_id(args.data.client_id)
-		if client and client:supports_method("textDocument/inlayHint") then
-			vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
-		end
 	end,
 })
 
@@ -188,5 +196,11 @@ return {
 			require("tiny-inline-diagnostic").setup(opts)
 			vim.diagnostic.config({ virtual_text = false }) -- Disable Neovim's default virtual text diagnostics
 		end,
+	},
+	{
+		-- show diagnostics of the whole project
+		"artemave/workspace-diagnostics.nvim",
+		event = "LspAttach",
+		opts = {}
 	},
 }
