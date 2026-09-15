@@ -161,4 +161,32 @@ return {
 			},
 		},
 	},
+	{
+		-- multiline diagnostic messages with customizable styles and icons.
+		"rachartier/tiny-inline-diagnostic.nvim",
+		event = "LspAttach",
+		opts = {
+			preset = "nonerdfont",
+			transparent_cursorline = false,
+			signs = {
+				arrow = "",
+			},
+			options = {
+				multilines = {
+					enabled = true,
+				},
+				show_source = {
+					if_many = true,
+				},
+				break_line = {
+					enabled = true,
+					after = 120,
+				},
+			},
+		},
+		config = function(_, opts)
+			require("tiny-inline-diagnostic").setup(opts)
+			vim.diagnostic.config({ virtual_text = false }) -- Disable Neovim's default virtual text diagnostics
+		end,
+	},
 }
