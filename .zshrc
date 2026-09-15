@@ -24,6 +24,11 @@ if [[ -z $SSH_CONNECTION ]]; then
   export SUDO_EDITOR='nvim'
 fi
 
+# enable vi mode
+bindkey -v
+# instant vi mode when pressing <esc>
+export KEYTIMEOUT=1
+
 # Android development
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=$PATH:$ANDROID_HOME/emulator
@@ -36,7 +41,7 @@ export JDTLS_JVM_ARGS="-javaagent:$HOME/.local/share/nvim/mason/packages/jdtls/l
 (( $+commands[mise] )) && eval "$(mise activate zsh)"
 
 # direnv
-(( $+commands[direnv] )) && eval "$(direnv export zsh)"
+(( $+commands[direnv] )) && eval "$(direnv hook zsh)"
 
 # starship
 (( $+commands[starship] )) && eval "$(starship init zsh)"

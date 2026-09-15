@@ -9,6 +9,7 @@ return {
 		cmd = { "WrappedNvim" },
 		opts = {
 			path = os.getenv("HOME") .. "/dotfiles/",
+			border = "single",
 		},
 	},
 	{

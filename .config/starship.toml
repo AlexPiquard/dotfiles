@@ -1,20 +1,39 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-add_newline = true
+add_newline = false
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$line_break\
+$character\
+"""
+right_format = """$all"""
+
+[character]
+success_symbol = "[❯](bold cyan)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold cyan)"
+vimcmd_visual_symbol = "[❮](bold yellow)"
+vimcmd_replace_symbol = "[❮](bold purple)"
+vimcmd_replace_one_symbol = "[❮](bold purple)"
+
+[line_break]
+disabled = true
 
 [git_commit]
 commit_hash_length = 4
 tag_symbol = "🔖 "
 
+[git_status]
+# Original arrows (⇡/⇣) are too thin compared to other icons
+ahead = "↑"
+behind = "↓"
+
 [directory]
 style = "bold #2e7de9"
 truncation_length = 8
-
-[java]
-disabled = false
-detect_extensions = ["java", "class", "gradle", "cljs", "cljc"]
-[jobs]
-disabled = false
 
 [battery]
 disabled = true
@@ -22,5 +41,11 @@ disabled = true
 [aws]
 disabled = true
 
-[azure]
-disabled = true
+[direnv]
+disabled = false
+
+[mise]
+disabled = false
+
+[sudo]
+disabled = false
