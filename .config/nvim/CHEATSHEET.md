@@ -91,13 +91,10 @@
 
 # TODO
 
-- fix markdown paragraphs
 - something detecting malicious/dangerous code when opening project (eval, etc)
-- something in tmux to load a predefined setup in a tab (multiple windows and cmd in each)
-- https://github.com/DNLHC/glance.nvim / https://github.com/rmagatti/goto-preview (reference preview not working) / https://nvimdev.github.io/
 - make gd opens the already visible buffer (even in other tab) (not working for tabs)
-- symlinked subfolders with stow
 - todo-comments errors without the ending ":"
 - disable highlight for color words in comments
 - https://github.com/icholy/lsplinks.nvim (https://github.com/davidosomething/dotfiles/blob/dev/nvim/lua/dko/plugins/lsp.lua)
-- change keymap to accept terminal suggestion (instead of arrow)
+- fix the diff viewer for opencode in nvim : not always visible, and in one buffer
+- when 0.13 released: remove mg979/vim-visual-multi and use native multicursors

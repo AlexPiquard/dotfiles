@@ -26,3 +26,6 @@ load_plugin() {
 
 load_plugin zsh-autosuggestions/zsh-autosuggestions.zsh
 load_plugin zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# C-n to accept suggestion
+bindkey -M viins '^N' autosuggest-accept
