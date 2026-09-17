@@ -7,18 +7,12 @@ map("i", "<C-l>", "<Right>", { desc = "move right" })
 map("i", "<C-j>", "<Down>", { desc = "move down" })
 map("i", "<C-k>", "<Up>", { desc = "move up" })
 
-map("n", "<C-h>", "<C-w>h", { desc = "switch window left" })
-map("n", "<C-l>", "<C-w>l", { desc = "switch window right" })
-map("n", "<C-j>", "<C-w>j", { desc = "switch window down" })
-map("n", "<C-k>", "<C-w>k", { desc = "switch window up" })
-
 -- center after move
 map("n", "<C-d>", function()
 	vim.cmd([[execute "normal! \<C-d>"]])
 	vim.cmd("normal! zz")
 end)
 map("n", "<C-u>", "<C-u>zz")
-
 map("n", "n", "nzz")
 map("n", "N", "Nzz")
 
@@ -32,20 +26,7 @@ vim.keymap.set("n", "<Esc>", function()
 	vim.cmd("noh")
 end, { desc = "general clear highlights" })
 
-map("n", "<C-s>", "<cmd>w<CR>", { desc = "general save file" })
-map("n", "<C-c>", "<cmd>%y+<CR>", { desc = "general copy whole file" })
-
--- Comment
-map("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
-map("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
-
 map("i", "jk", "<ESC>", { desc = "Escape insert mode" })
-
--- Tmux
-map("n", "<C-h>", "<cmd> TmuxNavigateLeft<CR>", { desc = "window left" })
-map("n", "<C-j>", "<cmd> TmuxNavigateDown<CR>", { desc = "window down" })
-map("n", "<C-k>", "<cmd> TmuxNavigateUp<CR>", { desc = "window up" })
-map("n", "<C-l>", "<cmd> TmuxNavigateRight<CR>", { desc = "window right" })
 
 -- Diagnostics
 map("n", "<A-b>", function()
