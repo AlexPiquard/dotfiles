@@ -9,24 +9,7 @@ vim.diagnostic.config({
 
 -- what client can do, sent to lsp server
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem = {
-	documentationFormat = { "markdown", "plaintext" },
-	snippetSupport = true,
-	preselectSupport = true,
-	insertReplaceSupport = true,
-	labelDetailsSupport = true,
-	deprecatedSupport = true,
-	commitCharactersSupport = true,
-	tagSupport = { valueSet = { 1 } },
-	resolveSupport = {
-		properties = {
-			"documentation",
-			"detail",
-			"additionalTextEdits",
-		},
-	},
-}
-
+capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 vim.lsp.config("*", {
 	capabilities = capabilities,
 })
