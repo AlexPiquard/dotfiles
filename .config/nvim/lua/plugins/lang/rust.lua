@@ -31,11 +31,13 @@ return {
 								enable = true,
 							},
 						},
-						-- use bacon
-						checkOnSave = false,
+						-- use bacon (bacon is quicker but r-a provides more diagnostics, and two lsp in parallel can be laggy)
+						-- checkOnSave = false,
+						checkOnSave = true,
 						diagnostics = {
 							-- use bacon
-							enable = false,
+							-- enable = false,
+							enable = true,
 						},
 						procMacro = {
 							enable = true,
@@ -82,9 +84,7 @@ return {
 				program = function()
 					meson_build_dir = vim.fn.input("Build dir: ", "builddir")
 					local name = vim.fn
-						.system(
-							"cargo metadata --no-deps --format-version=1 2>/dev/null | jq -r '.packages[0].name'"
-						)
+						.system("cargo metadata --no-deps --format-version=1 2>/dev/null | jq -r '.packages[0].name'")
 						:gsub("%s+", "")
 					if name == "" then
 						name = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
@@ -93,7 +93,9 @@ return {
 				end,
 				cwd = "${workspaceFolder}",
 				env = function()
-					local output = vim.fn.system("meson devenv -C " .. vim.fn.getcwd() .. "/" .. meson_build_dir .. " env 2>/dev/null")
+					local output = vim.fn.system(
+						"meson devenv -C " .. vim.fn.getcwd() .. "/" .. meson_build_dir .. " env 2>/dev/null"
+					)
 					local env = {}
 					for line in output:gmatch("[^\r\n]+") do
 						local k, v = line:match("^(%S+)=(.*)")
@@ -123,7 +125,10 @@ return {
 		version = "*",
 		ft = "rust",
 		lazy = false,
-		opts = {},
+		opts = {
+			-- Prevent server from starting if display is off
+			auto_attach = false,
+		},
 	},
 	{
 		"Saecki/crates.nvim",
@@ -147,7 +152,7 @@ return {
 		optional = true,
 		opts = {
 			servers = {
-				bacon_ls = true,
+				-- bacon_ls = true,
 				mesonlsp = true,
 				blueprint_ls = true, -- sudo dnf install blueprint_compiler
 			},
