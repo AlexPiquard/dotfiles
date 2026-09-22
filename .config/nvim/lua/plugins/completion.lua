@@ -56,7 +56,7 @@ return {
 		},
 
 		-- adds words from entire project as completions
-		"mikavilpas/blink-ripgrep.nvim",
+		-- "mikavilpas/blink-ripgrep.nvim",
 
 		-- better colors for entries
 		"xzbdmw/colorful-menu.nvim",
@@ -78,7 +78,7 @@ return {
 			implementation = "prefer_rust_with_warning",
 		},
 		sources = {
-			default = { "lsp", "snippets", "buffer", "path", "ripgrep" },
+			default = { "lsp", "snippets", "buffer", "path", --[[ "ripgrep" ]] },
 			per_filetype = {
 				lua = { inherit_defaults = true, "lazydev" },
 			},
