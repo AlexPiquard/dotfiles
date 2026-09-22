@@ -1,7 +1,3 @@
-local open_lazygit = function()
-	Snacks.terminal("lazygit", { win = { position = "float", backdrop = 100 } })
-end
-
 return {
 	"folke/snacks.nvim",
 	priority = 900,
@@ -74,57 +70,6 @@ return {
 	},
 	keys = {
 		{
-			"<leader>lg",
-			function()
-				open_lazygit()
-			end,
-			desc = "LazyGit",
-		},
-		{
-			"<leader>gf",
-			function()
-				Snacks.picker.git_log_file()
-			end,
-			desc = "Git log [f]ile",
-		},
-		{
-			"<leader>gl",
-			function()
-				Snacks.picker.git_log()
-			end,
-			desc = "Git [l]og",
-		},
-		{
-			"<leader>gL",
-			function()
-				Snacks.picker.git_log_line()
-			end,
-			desc = "Git log [L]ine",
-		},
-		{
-			"<leader>gd",
-			function()
-				Snacks.picker.git_diff()
-			end,
-			desc = "Git [d]iff",
-		},
-		{
-			"<leader>,",
-			function()
-				Snacks.picker.buffers({
-					unloaded = false,
-					win = {
-						input = {
-							keys = {
-								["dd"] = { "bufdelete", mode = { "n" } },
-							},
-						},
-					},
-				})
-			end,
-			desc = "Buffers",
-		},
-		{
 			"<leader>ff",
 			function()
 				Snacks.picker.files()
@@ -137,27 +82,6 @@ return {
 				Snacks.picker.grep()
 			end,
 			desc = "Grep",
-		},
-		{
-			"gr",
-			function()
-				Snacks.picker.lsp_references()
-			end,
-			desc = "Lsp references",
-		},
-		{
-			"gd",
-			function()
-				Snacks.picker.lsp_definitions()
-			end,
-			desc = "Goto Definition",
-		},
-		{
-			"gD",
-			function()
-				Snacks.picker.lsp_declarations()
-			end,
-			desc = "Goto Declaration",
 		},
 		{
 			"<leader>ft",
@@ -174,45 +98,13 @@ return {
 			desc = "Resume",
 		},
 		{
-			"<leader>sd",
-			function()
-				Snacks.picker.diagnostics()
-			end,
-			desc = "Diagnostics",
-		},
-		{
-			"<leader>sD",
-			function()
-				Snacks.picker.diagnostics_buffer()
-			end,
-			desc = "Buffer Diagnostics",
-		},
-		{
-			"<leader>sH",
-			function()
-				Snacks.picker.highlights()
-			end,
-			desc = "Highlights",
-		},
-		{
-			"<leader>sj",
-			function()
-				Snacks.picker.jumps()
-			end,
-			desc = "Jumps",
-		},
-		{
 			"<leader>bd",
 			function()
 				Snacks.bufdelete()
 			end,
 			desc = "Delete buffer",
 		},
-		{
-			"<leader>bD",
-			"<cmd>:bd<cr>",
-			desc = "Delete buffer and window",
-		},
+		{ "<leader>bD", "<cmd>:bd<cr>", desc = "Delete buffer and window" },
 		{
 			"<leader>bo",
 			function()
@@ -226,6 +118,22 @@ return {
 				Snacks.bufdelete.invisible()
 			end,
 			desc = "Delete invisible buffers",
+		},
+		{
+			"<leader>,",
+			function()
+				Snacks.picker.buffers({
+					unloaded = false,
+					win = {
+						input = {
+							keys = {
+								["dd"] = { "bufdelete", mode = { "n" } },
+							},
+						},
+					},
+				})
+			end,
+			desc = "Buffers",
 		},
 	},
 }

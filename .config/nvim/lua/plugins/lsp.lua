@@ -64,6 +64,23 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end, opts("List workspace folders"))
 
 		map("n", "<leader>T", vim.lsp.buf.type_definition, opts("Go to type definition"))
+
+		map("n", "gr", function()
+			Snacks.picker.lsp_references()
+		end, opts("References"))
+		map("n", "gd", function()
+			Snacks.picker.lsp_definitions()
+		end, opts("Goto Definition"))
+		map("n", "gD", function()
+			Snacks.picker.lsp_declarations()
+		end, opts("Goto Declaration"))
+
+		map("n", "<leader>sd", function()
+			Snacks.picker.diagnostics()
+		end, { desc = "Diagnostics Picker" })
+		map("n", "<leader>sD", function()
+			Snacks.picker.diagnostics_buffer()
+		end, { desc = "Buffer Diagnostics Picker" })
 	end,
 })
 
@@ -184,6 +201,6 @@ return {
 		-- show diagnostics of the whole project
 		"artemave/workspace-diagnostics.nvim",
 		event = "LspAttach",
-		opts = {}
+		opts = {},
 	},
 }
