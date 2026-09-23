@@ -166,13 +166,4 @@ return {
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 		opts = {},
 	},
-	{
-		-- Escape from parentheses, quotes, etc, using <tab>
-		"abecodes/tabout.nvim",
-		lazy = false,
-		event = "InsertCharPre",
-		opts = {
-			completion = true,
-		},
-	},
 }
