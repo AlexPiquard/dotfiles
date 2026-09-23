@@ -1,17 +1,17 @@
-export ZSH="$HOME/.oh-my-zsh"
+# optionally start tmux
+if [ -z "$HYPRLAND_INSTANCE_SIGNATURE" ] && [ -z "$TMUX" ] && [ -z "$SSH_TTY" ]; then
+  if tmux has-session 2>/dev/null; then
+    exec tmux attach
+  else
+    exec tmux new-session
+  fi
+fi
 
-export DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# oh my zsh
-source $HOME/oh-my-zsh.zsh
+# share big history file
+export HISTFILE="$HOME/.zsh_history"
+export HISTSIZE=100000
+export SAVEHIST=100000
+setopt SHARE_HISTORY
 
 export PATH="$PATH:$HOME/.local/bin:$HOME/bin"
 
@@ -56,8 +56,8 @@ update_fzf_theme() {
 }
 ## fzf: apply theme when using "fzf" command
 fzf() {
-    update_fzf_theme
-    command fzf "$@"
+  update_fzf_theme
+  command fzf "$@"
 }
 ## fzf: apply theme when using Ctrl+R
 fzf-history-wrapper() {
@@ -94,6 +94,10 @@ alias ll='ls -la'
 # Ctrl+Backspace is handled in terminal config because this key is unknown here
 bindkey '^[[3;5~' kill-word
 
+# Ctrl+Arrow
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1;5C' forward-word
+
 # rust
 if [[ -f $HOME/.cargo/env ]]; then
   . "$HOME/.cargo/env"
@@ -112,3 +116,27 @@ export GST_PLUGIN_PATH="/usr/lib/x86_64-linux-gnu/gstreamer-1.0/"
 
 # linecast
 export WEATHER_UNITS=metric
+
+# add completion for manually installed things (fpath)
+fpath=( "$HOME"/.config/zsh/completions $fpath )
+
+# zinit
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+  print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+  command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+  command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+    print -P "%F{33} %F{34}Installation successful.%f%b" || \
+    print -P "%F{160} The clone has failed.%f%b"
+fi
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# zinit plugins
+zinit wait lucid for \
+  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+    zdharma-continuum/fast-syntax-highlighting \
+  blockf \
+    zsh-users/zsh-completions \
+  atload"!_zsh_autosuggest_start; bindkey '^N' autosuggest-accept" \
+    zsh-users/zsh-autosuggestions \

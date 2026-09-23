@@ -16,9 +16,7 @@ sudo dnf install -y \
   fd-find \
   stow \
   direnv \
-  zsh-autosuggestions \
   maven \
-  zsh-syntax-highlighting \
   starship \
   zoxide \
   tree-sitter-cli \

@@ -49,6 +49,7 @@
 | empty at right and insert  | C        |
 | insert at end              | A        |
 | insert at beginning        | I        |
+| last visual selection      | gv       |
 
 
 | plugin action               | keymap      |

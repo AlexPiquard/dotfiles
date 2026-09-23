@@ -21,7 +21,7 @@ _darcs
 ^/README.*
 ^/LICENSE.*
 ^/COPYING
-^/pkg
+^/scripts
 ^/gnome
 ^/hypr
 
