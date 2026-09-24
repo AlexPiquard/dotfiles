@@ -35,10 +35,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
 		local client = vim.lsp.get_client_by_id(args.data.client_id)
 		if client then
-			-- workspace-diagnostics
+			-- workspace-diagnostics (skip clients without filetypes, e.g. render-markdown's embedded client)
 			if client:supports_method("workspace/diagnostic", args.buf) then
 				vim.lsp.buf.workspace_diagnostics({ client_id = client.id })
-			else
+			elseif vim.tbl_get(client.config, "filetypes") ~= nil then
 				require("workspace-diagnostics").populate_workspace_diagnostics(client, args.buf)
 			end
 			-- enable inlay hints if supported
