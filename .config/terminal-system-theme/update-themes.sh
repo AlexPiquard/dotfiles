@@ -24,3 +24,6 @@ touch --no-dereference ~/.config/alacritty/alacritty.toml
 
 # fzf
 $UPDATE_SCRIPT "$theme" "fzf/%s.sh"
+
+# eza
+$UPDATE_SCRIPT "$theme" "eza/%s.yml"

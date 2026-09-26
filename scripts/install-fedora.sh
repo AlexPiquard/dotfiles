@@ -20,3 +20,4 @@ sudo dnf install -y \
   starship \
   zoxide \
   tree-sitter-cli \
+  eza \
