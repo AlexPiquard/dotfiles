@@ -44,7 +44,7 @@ vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
 
 -- disable cursorline highlight on specific buffers
 local disable_cursorline_group = vim.api.nvim_create_augroup("DisableCursorline", { clear = true })
-local disabled_filetypes = { "snacks_picker_input", "snacks_dashboard" }
+local disabled_filetypes = { "snacks_picker_input", "snacks_dashboard", "opencode_ask" }
 local disabled_buftypes = { "terminal", "nofile" }
 vim.api.nvim_create_autocmd({ "BufEnter", "FileType" }, {
 	group = disable_cursorline_group,

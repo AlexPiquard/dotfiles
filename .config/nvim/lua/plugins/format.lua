@@ -13,7 +13,17 @@ return {
 	},
 	opts = {
 		async = true,
-		lsp_fallback = true,
+
+		formatters = {
+			topcoat = {
+				command = "topcoat",
+				args = { "fmt", "--stdin" },
+				require_cwd = true,
+				cwd = function(self, ctx)
+					return require("conform.util").root_file({ "Topcoat.toml" })(self, ctx)
+				end,
+			},
+		},
 
 		formatters_by_ft = {
 			lua = { "stylua" },
@@ -24,7 +34,7 @@ return {
 			jsonc = { "biome-check" },
 			html = { "prettier" },
 			java = { "google-java-format" },
-			rust = { "rustfmt" },
+			rust = { "topcoat", "rustfmt" },
 		},
 	},
 }
