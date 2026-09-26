@@ -1,5 +1,8 @@
 nerdfont: true
 
+# let the tmux theme own window-status-format, otherwise workmux's uncolored one wins
+status_format: false
+
 agent: opencode
 agents:
   opencode:

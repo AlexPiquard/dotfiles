@@ -30,8 +30,8 @@ if-shell '[ "$(tmux show-option -gqv "clock-mode-style")" == "24" ]' {
 setw -g window-status-activity-style "underscore,fg=#6172b0,bg=#d0d5e3"
 setw -g window-status-separator ""
 setw -g window-status-style "NONE,fg=#6172b0,bg=#d0d5e3"
-setw -g window-status-format "#[fg=#d0d5e3,bg=#d0d5e3,nobold,nounderscore,noitalics]#[default] #I  #W #F #[fg=#d0d5e3,bg=#d0d5e3,nobold,nounderscore,noitalics]"
-setw -g window-status-current-format "#[fg=#d0d5e3,bg=#a8aecb,nobold,nounderscore,noitalics]#[fg=#2e7de9,bg=#a8aecb,bold] #I  #W #F #[fg=#a8aecb,bg=#d0d5e3,nobold,nounderscore,noitalics]"
+setw -g window-status-format "#[fg=#d0d5e3,bg=#d0d5e3,nobold,nounderscore,noitalics]#[default] #I  #W #F #{?@workmux_status, #{@workmux_status},} #[fg=#d0d5e3,bg=#d0d5e3,nobold,nounderscore,noitalics]"
+setw -g window-status-current-format "#[fg=#d0d5e3,bg=#a8aecb,nobold,nounderscore,noitalics]#[fg=#2e7de9,bg=#a8aecb,bold] #I  #W #F #{?@workmux_status, #{@workmux_status},} #[fg=#a8aecb,bg=#d0d5e3,nobold,nounderscore,noitalics]"
 
 # tmux-plugins/tmux-prefix-highlight support
 set -g @prefix_highlight_output_prefix "#[fg=#8c6c3e]#[bg=#d0d5e3]#[fg=#d0d5e3]#[bg=#8c6c3e]"
