@@ -75,34 +75,6 @@ return {
 		},
 		keys = {
 			{
-				"<leader>ff",
-				function()
-					Snacks.picker.files()
-				end,
-				desc = "Find Files",
-			},
-			{
-				"<leader>fw",
-				function()
-					Snacks.picker.grep()
-				end,
-				desc = "Grep",
-			},
-			{
-				"<leader>ft",
-				function()
-					Snacks.picker.treesitter()
-				end,
-				desc = "Treesitter",
-			},
-			{
-				"<leader>fr",
-				function()
-					Snacks.picker.resume()
-				end,
-				desc = "Resume",
-			},
-			{
 				"<leader>bd",
 				function()
 					Snacks.bufdelete()
@@ -144,7 +116,6 @@ return {
 	},
 	{
 		"dmtrKovalenko/fff",
-		enabled = false,
 		build = function()
 			-- downloads a prebuilt binary or falls back to cargo build
 			require("fff.download").download_or_build_binary()
@@ -179,24 +150,6 @@ return {
 				},
 			},
 		},
-		config = function(_, opts)
-			require("fff").setup(opts)
-			-- preview not centered
-			local preview_mod = require("fff.file_picker.preview")
-			local orig_scroll = preview_mod.scroll_to_line
-			function preview_mod.scroll_to_line(line)
-				orig_scroll(line)
-				local winid = preview_mod.state and preview_mod.state.winid
-				if winid and vim.api.nvim_win_is_valid(winid) then
-					pcall(vim.api.nvim_win_call, winid, function()
-						vim.cmd("normal! zz")
-					end)
-				end
-			end
-			-- when centered: cant differentiate current match and others because they are all orange
-			-- when enabling cursorline: the line matches are gray without bg, so cant be read
-			-- fff is not using the Search hl (the blue one meaning the current)
-		end,
 		lazy = false, -- the plugin lazy-initialises itself
 		keys = {
 			{

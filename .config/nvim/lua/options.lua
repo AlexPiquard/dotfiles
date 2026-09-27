@@ -21,6 +21,8 @@ end
 o.cursorline = true
 -- Show line and number highlight on current line when cursorline is on
 o.cursorlineopt = "line,number"
+-- min distance of cursor to top/bottom
+o.scrolloff = 10
 -- Disable line wrapping (horizontal scroll instead)
 o.wrap = false
 -- Disable reports (lines yanked, etc)
