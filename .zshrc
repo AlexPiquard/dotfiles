@@ -130,6 +130,9 @@ export GST_PLUGIN_PATH="/usr/lib/x86_64-linux-gnu/gstreamer-1.0/"
 # linecast
 export WEATHER_UNITS=metric
 
+# pi
+export PI_CODING_AGENT_DIR="$HOME/.config/pi"
+
 # add completion for manually installed things (fpath)
 fpath=( "$HOME"/.config/zsh/completions $fpath )
 

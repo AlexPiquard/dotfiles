@@ -1,0 +1,39 @@
+{
+  "providers": {
+    "huggingface": {
+      "models": [
+        {
+          "id": "deepseek-ai/DeepSeek-V4-Flash-0731",
+          "name": "DeepSeek V4 Flash 0731",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "thinkingLevelMap": {
+            "off": null,
+            "minimal": null,
+            "low": null,
+            "medium": null,
+            "high": "high",
+            "xhigh": null,
+            "max": "max"
+          },
+          "contextWindow": 1048576,
+          "maxTokens": 384000,
+          "cost": {
+            "input": 0.14,
+            "output": 0.28,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "compat": {
+            "supportsStrictMode": true,
+            "supportsDeveloperRole": false
+          }
+        }
+      ],
+      "api": "openai-completions",
+      "baseUrl": "https://router.huggingface.co/v1"
+    }
+  }
+}
