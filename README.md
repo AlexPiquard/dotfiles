@@ -1,7 +1,6 @@
 # First install
 
 - install alacritty, kitty or ghostty
-- install 1password
 - zsh
     - install
     - `chsh -s $(which zsh)` (or `sudo chsh $USER` in fedora)

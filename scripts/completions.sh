@@ -5,5 +5,6 @@ command -v gh &>/dev/null && gh completion -s zsh > ~/.config/zsh/completions/_g
 command -v bun &>/dev/null && bun completions zsh > ~/.config/zsh/completions/_bun
 command -v rustup &>/dev/null && rustup completions zsh > ~/.config/zsh/completions/_rustup
 command -v cargo &>/dev/null && rustup completions zsh cargo > ~/.config/zsh/completions/_cargo
+command -v op &>/dev/null && op completion zsh > ~/.config/zsh/completions/_op
 
 rm -f ~/.zcompdump*

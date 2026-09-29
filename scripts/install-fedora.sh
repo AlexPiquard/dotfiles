@@ -21,3 +21,5 @@ sudo dnf install -y \
   zoxide \
   tree-sitter-cli \
   eza \
+  1password \
+  1password-cli
