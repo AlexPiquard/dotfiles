@@ -68,6 +68,7 @@
   "translator.nvim": { "branch": "main", "commit": "a080010a5bbe54de317697fc2d4f5f8bdf0a74a9" },
   "treesj": { "branch": "main", "commit": "9f349ba62c524f065d6f43254d731ddf8319b9bf" },
   "ts-error-translator.nvim": { "branch": "main", "commit": "558abff11b9e8f4cefc0de09df780c56841c7a4b" },
+  "vi-sql.nvim": { "branch": "master", "commit": "4b838d10a907414b85c752d9b54d794b5b1ebf51" },
   "vim-sandwich": { "branch": "master", "commit": "74cf93d58ccc567d8e2310a69860f1b93af19403" },
   "vim-suda": { "branch": "master", "commit": "c492741b4679b3cdd4d9e34138209784e061d916" },
   "vim-table-mode": { "branch": "master", "commit": "bb025308a45c67c7c8f0763ba37bc2ee3f534df0" },
