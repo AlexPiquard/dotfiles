@@ -41,9 +41,6 @@ disabled = true
 [aws]
 disabled = true
 
-[direnv]
-disabled = false
-
 [mise]
 disabled = false
 

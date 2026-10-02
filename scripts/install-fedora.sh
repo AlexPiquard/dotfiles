@@ -15,7 +15,6 @@ sudo dnf install -y \
   ripgrep \
   fd-find \
   stow \
-  direnv \
   maven \
   starship \
   zoxide \

@@ -47,9 +47,6 @@ export JDTLS_JVM_ARGS="-javaagent:$HOME/.local/share/nvim/mason/packages/jdtls/l
 # mise
 (( $+commands[mise] )) && eval "$(mise activate zsh)"
 
-# direnv
-(( $+commands[direnv] )) && eval "$(direnv hook zsh)"
-
 # starship
 (( $+commands[starship] )) && eval "$(starship init zsh)"
 
@@ -161,7 +158,7 @@ zinit light Giammarco-Ferranti/deja
 
 # deja keybinds
 export DEJA_ACCEPT_KEY='^N' # Space → accept full suggestion on a dedicated key
-export DEJA_CYCLE_KEY='^L' # Tab → cycle alternatives
+export DEJA_CYCLE_KEY='^O' # Tab → cycle alternatives
 export DEJA_TOGGLE_KEY=
 export DEJA_CYCLE_FUZZY_KEY=
 export DEJA_CYCLE_FUZZY_BACK_KEY=
