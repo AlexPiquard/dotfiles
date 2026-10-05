@@ -1,8 +1,14 @@
 {
-  "lastChangelogVersion": "0.87.1",
-	"theme": "tokyonight_day/tokyonight_moon",
-	"defaultProvider": "huggingface",
-	"defaultModel": "deepseek-ai/DeepSeek-V4-Flash-0731",
-	"quietStartup": true,
-	"packages": ["npm:pi-mcp-adapter", "npm:pi-web-access"]
+  "lastChangelogVersion": "0.99.2",
+  "theme": "tokyonight_day/tokyonight_moon",
+  "defaultProvider": "huggingface",
+  "defaultModel": "deepseek-ai/DeepSeek-V4-Flash-0731",
+  "quietStartup": true,
+  "packages": [
+    "npm:pi-mcp-adapter",
+    "npm:pi-web-access"
+  ],
+  "extensions": [
+    "-builtin:mcp"
+  ]
 }

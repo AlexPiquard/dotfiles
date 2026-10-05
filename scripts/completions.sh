@@ -6,5 +6,6 @@ command -v bun &>/dev/null && bun completions zsh > ~/.config/zsh/completions/_b
 command -v rustup &>/dev/null && rustup completions zsh > ~/.config/zsh/completions/_rustup
 command -v cargo &>/dev/null && rustup completions zsh cargo > ~/.config/zsh/completions/_cargo
 command -v op &>/dev/null && op completion zsh > ~/.config/zsh/completions/_op
+command -v workmux &>/dev/null && workmux completions zsh > ~/.config/zsh/completions/_workmux
 
 rm -f ~/.zcompdump*

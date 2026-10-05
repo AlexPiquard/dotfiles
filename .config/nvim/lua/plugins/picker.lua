@@ -1,3 +1,24 @@
+--- hrtime of the last fff picker that was opened, snacks keeps its own in `snacks.picker.resume.state`
+--- @type integer?
+local fff_at
+
+--- resume the most recently closed picker, whichever plugin it came from
+--- @return boolean? true if a picker was resumed
+local function resume_last()
+	local snacks_at = 0
+	for _, state in pairs(require("snacks.picker.resume").state) do
+		snacks_at = math.max(snacks_at, state.added)
+	end
+
+	if (fff_at or 0) > snacks_at then
+		return require("fff").resume()
+	end
+	if snacks_at > 0 then
+		return Snacks.picker.resume() ~= nil
+	end
+	return require("fff").resume() -- nothing was ever used, fall back to fff
+end
+
 return {
 	{
 		"folke/snacks.nvim",
@@ -116,6 +137,14 @@ return {
 	},
 	{
 		"dmtrKovalenko/fff",
+		init = function()
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "FFFOpen",
+				callback = function()
+					fff_at = vim.uv.hrtime()
+				end,
+			})
+		end,
 		build = function()
 			-- downloads a prebuilt binary or falls back to cargo build
 			require("fff.download").download_or_build_binary()
@@ -176,10 +205,8 @@ return {
 			},
 			{
 				"<leader>fr",
-				function()
-					require("fff").resume()
-				end,
-				desc = "Resume",
+				resume_last,
+				desc = "Resume last picker",
 			},
 		},
 	},
