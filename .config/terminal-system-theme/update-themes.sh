@@ -11,9 +11,6 @@ UPDATE_SCRIPT=~/.config/terminal-system-theme/update-theme.sh
 $UPDATE_SCRIPT "$theme" "tmux/%s.tmux"
 tmux source ~/.config/tmux/theme.tmux
 
-# lazygit
-$UPDATE_SCRIPT "$theme" "lazygit/%s.yml"
-
 # kitty
 $UPDATE_SCRIPT "$theme" "kitty/%s.conf"
 kill -SIGUSR1 $(pgrep kitty)

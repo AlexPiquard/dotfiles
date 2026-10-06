@@ -36,3 +36,10 @@ end)
 map("n", "<A-S-b>", function()
 	vim.diagnostic.jump({ count = -1, float = false })
 end)
+
+map("n", "<leader>o", function()
+  local dir = vim.fn.expand("%:p:h")
+  if dir ~= "" then
+    vim.ui.open(dir)
+  end
+end, { desc = "Open folder" })

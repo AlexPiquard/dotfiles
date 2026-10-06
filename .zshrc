@@ -88,9 +88,6 @@ export PKG_CONFIG_PATH="/usr/share/pkgconfig:/usr/lib/x86_64-linux-gnu/pkgconfig
 # 1password gitea plugin for tea cli
 [[ ! -f $HOME/.config/op/plugins.sh ]] || source $HOME/.config/op/plugins.sh
 
-# lazygit theme
-export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml,$HOME/.config/lazygit/theme.yml"
-
 # aliases
 alias ls='eza --icons=always --group-directories-first'
 alias la='eza --all --icons=always --group-directories-first'
