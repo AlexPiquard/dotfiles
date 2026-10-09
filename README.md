@@ -7,7 +7,7 @@
     - `bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"`
 - install packages
     - fedora : `./scripts/install-fedora.sh`
-    - pi : `mise use --global pi@latest`
+    - mise tools : `./scripts/install-mise-tools.sh`
 - install fonts (`Recursive` and `Symbols Nerd Font Mono`)
 - symlink dotfiles: `./stow.sh`
 - generate missing completions : `./scripts/completions.sh`

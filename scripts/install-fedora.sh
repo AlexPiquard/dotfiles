@@ -9,7 +9,6 @@ sudo dnf copr enable -y jdxcode/mise
 sudo dnf install -y \
   fzf \
   mise \
-  lazygit \
   make \
   neovim \
   ripgrep \
