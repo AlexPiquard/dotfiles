@@ -23,7 +23,7 @@ local languages = {
 return {
 	-- syntax highlight
 	"nvim-treesitter/nvim-treesitter",
-	event = { "BufReadPost", "BufNewFile", "FileType" },
+	event = { "BufReadPost", "BufNewFile" },
 	cmd = { "TSInstall", "TSInstallFromGrammar", "TSUpdate", "TSUninstall", "TSLog" },
 	dependencies = {
 		{

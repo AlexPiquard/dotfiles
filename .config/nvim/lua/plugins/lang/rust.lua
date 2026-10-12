@@ -128,7 +128,6 @@ return {
 		cond = vim.fn.executable("rustowl") == 1,
 		version = "*",
 		ft = "rust",
-		lazy = false,
 		opts = {
 			-- Prevent server from starting if display is off
 			auto_attach = false,

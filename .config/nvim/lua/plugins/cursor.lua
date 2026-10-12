@@ -1,19 +1,5 @@
 return {
 	{
-		-- show and work with multiple cursors
-		"mg979/vim-visual-multi",
-		event = "VeryLazy",
-		enabled = false,
-		init = function()
-			vim.g.VM_maps = {
-				-- TODO: find other keymap, this one is used
-				-- ["Find Under"] = "<C-y>",
-				-- ["Find Subword Under"] = "<C-y>",
-			}
-		end,
-	},
-
-	{
 		-- adds smooth, customizable animations to text operations like yank, paste, search, undo/redo, and more.
 		"rachartier/tiny-glimmer.nvim",
 		event = { "BufReadPost", "BufNewFile" },
@@ -36,7 +22,7 @@ return {
 	{
 		-- move any selection in any direction
 		"nvim-mini/mini.move",
-		event = "VeryLazy",
+		event = { "BufReadPost", "BufNewFile" },
 		opts = {},
 	},
 
@@ -59,18 +45,6 @@ return {
 					easing = "linear",
 				},
 			},
-		},
-	},
-
-	{
-		-- Change the w, e, b motions. Move by subwords and skip insignificant punctuation.
-		"chrisgrieser/nvim-spider",
-		enabled = false,
-		keys = {
-			{ "w", "<cmd>lua require('spider').motion('w')<CR>", mode = { "n", "o", "x" } },
-			{ "e", "<cmd>lua require('spider').motion('e')<CR>", mode = { "n", "o", "x" } },
-			{ "b", "<cmd>lua require('spider').motion('b')<CR>", mode = { "n", "o", "x" } },
-			{ "ge", "<cmd>lua require('spider').motion('ge')<CR>", mode = { "n", "o", "x" } },
 		},
 	},
 
@@ -128,37 +102,6 @@ return {
 		},
 	},
 
-	{
-		-- animated cursor
-		"sphamba/smear-cursor.nvim",
-		event = "VeryLazy",
-		enabled = false,
-
-		opts = {
-			-- Smear cursor when switching buffers or windows.
-			smear_between_buffers = true,
-
-			-- Smear cursor when moving within line or to neighbor lines.
-			-- Use `min_horizontal_distance_smear` and `min_vertical_distance_smear` for finer control
-			smear_between_neighbor_lines = true,
-
-			-- Draw the smear in buffer space instead of screen space when scrolling
-			scroll_buffer_space = true,
-
-			-- Set to `true` if your font supports legacy computing symbols (block unicode symbols).
-			-- Smears and particles will look a lot less blocky.
-			legacy_computing_symbols_support = true,
-
-			-- Smear cursor in insert mode.
-			-- See also `vertical_bar_cursor_insert_mode` and `distance_stop_animating_vertical_bar`.
-			smear_insert_mode = true,
-			distance_stop_animating_vertical_bar = 0.1,
-
-			stiffness = 0.5,
-			trailing_stiffness = 0.5,
-			matrix_pixel_threshold = 0.5,
-		},
-	},
 	{
 		-- split/join blocks of code
 		"Wansmer/treesj",

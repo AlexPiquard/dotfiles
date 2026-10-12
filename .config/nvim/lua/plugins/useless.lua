@@ -12,14 +12,4 @@ return {
 			border = "single",
 		},
 	},
-	{
-		"stevearc/aerial.nvim",
-		opts = {},
-		enabled = false,
-		cmd = { "AerialToggle" },
-		-- Optional dependencies
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-		},
-	},
 }
