@@ -54,6 +54,10 @@ return {
 								"target",
 								"venv",
 								".venv",
+								"mesondir",
+								"builddir",
+								".flatpak-builder",
+								"repo",
 							},
 							-- Avoid Roots Scanned hanging, see https://github.com/rust-lang/rust-analyzer/issues/12613#issuecomment-2096386344
 							watcher = "client",
