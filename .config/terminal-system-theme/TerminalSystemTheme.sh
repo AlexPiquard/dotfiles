@@ -1,18 +1,17 @@
 #!/bin/bash
 
-interface="org.freedesktop.portal.Settings"
-monitor_path="/org/freedesktop/portal/desktop"
-monitor_member="SettingChanged"
-count=0 #D-Bus fires the change event 4 times so we'll only act on it once
+last=""
 
-dbus-monitor --profile "interface='$interface',path=$monitor_path,member=$monitor_member" |
-	while read line; do
-		let count++
+gdbus monitor --session \
+	--dest org.freedesktop.portal.Desktop \
+	--object-path /org/freedesktop/portal/desktop |
+	while read -r line; do
+		if [[ "$line" == *"SettingChanged ('org.gnome.desktop.interface', 'color-scheme'"* ]]; then
+			theme="$(printf '%s\n' "$line" | sed -E "s/.*color-scheme', <'?([^'>]*)'?>.*/\1/")"
 
-		if [ $count = 3 ]; then
-			theme="$(dconf read /org/gnome/desktop/interface/color-scheme)"
-
-			~/.config/terminal-system-theme/update-themes.sh "$theme"
-			count=0
+			if [ "$theme" != "$last" ]; then
+				last="$theme"
+				~/.config/terminal-system-theme/update-themes.sh "$theme"
+			fi
 		fi
 	done

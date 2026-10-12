@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "$1" = "'prefer-dark'" ]; then
+if [ "$1" = "prefer-dark" ]; then
   THEME="tokyonight_moon"
 else
   THEME="tokyonight_day"

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 theme="$1"
-if [ ! $theme ]; then
-    theme="'prefer-dark'"
+if [ -z "$theme" ]; then
+    theme="prefer-dark"
 fi
 
 UPDATE_SCRIPT=~/.config/terminal-system-theme/update-theme.sh
@@ -13,7 +13,10 @@ tmux source ~/.config/tmux/theme.tmux
 
 # kitty
 $UPDATE_SCRIPT "$theme" "kitty/%s.conf"
-kill -SIGUSR1 $(pgrep kitty)
+pids=$(pgrep kitty)
+if [ -n  "$pids" ]; then
+    kill -SIGUSR1 $pids
+fi
 
 # alacritty
 $UPDATE_SCRIPT "$theme" "alacritty/%s.toml"
