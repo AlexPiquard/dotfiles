@@ -183,9 +183,17 @@ return {
 		cmd = "Undotree",
 	},
 	{
-		-- Faster opening of big files
-		"pteroctopus/faster.nvim",
-		lazy = false,
+		"nvim-mini/mini.icons",
+		config = function()
+			require("mini.icons").setup()
+			require("mini.icons").mock_nvim_web_devicons()
+		end,
+	},
+	-- better fold (zc)
+	{
+		"kevinhwang91/nvim-ufo",
+		event = { "BufReadPost", "BufNewFile" },
+		dependencies = "kevinhwang91/promise-async",
 		opts = {},
 	},
 }
