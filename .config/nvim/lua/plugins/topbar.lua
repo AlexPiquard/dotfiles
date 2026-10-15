@@ -5,7 +5,7 @@ return {
 		event = { "BufReadPost", "BufNewFile" },
 		---@type TabbyConfig
 		opts = {
-			preset = "active_wins_at_tail",
+			preset = "tab_only",
 		},
 		keys = {
 			{
