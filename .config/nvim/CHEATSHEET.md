@@ -96,6 +96,9 @@
 - make gd opens the already visible buffer (even in other tab) (not working for tabs)
 - todo-comments errors without the ending ":"
 - disable highlight for color words in comments
-- https://github.com/icholy/lsplinks.nvim (https://github.com/davidosomething/dotfiles/blob/dev/nvim/lua/dko/plugins/lsp.lua)
 - fix the diff viewer for opencode in nvim : not always visible, and in one buffer
-- when 0.13 released: remove mg979/vim-visual-multi and use native multicursors
+- sesh ? to select folders with fzf and open them in a tmux session or with workmux
+- use .config/zsh/.zshenv for PATH, EDITOR
+- first dotfiles install with stow should not have the .config folders symlinked ? (except nvim)
+- https://github.com/jmbuhr/otter.nvim ? to add lsp in parts of documents (like markdown ?)
+- handle multiple repo inside nvim (mainly lsp)

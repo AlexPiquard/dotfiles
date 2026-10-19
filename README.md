@@ -1,3 +1,7 @@
+<a href="https://dotfyle.com/AlexPiquard/dotfiles-config-nvim"><img src="https://dotfyle.com/AlexPiquard/dotfiles-config-nvim/badges/plugins?style=flat" /></a>
+<a href="https://dotfyle.com/AlexPiquard/dotfiles-config-nvim"><img src="https://dotfyle.com/AlexPiquard/dotfiles-config-nvim/badges/leaderkey?style=flat" /></a>
+<a href="https://dotfyle.com/AlexPiquard/dotfiles-config-nvim"><img src="https://dotfyle.com/AlexPiquard/dotfiles-config-nvim/badges/plugin-manager?style=flat" /></a>
+
 # First install
 
 - install alacritty, kitty or ghostty
@@ -15,5 +19,4 @@
     - install
     - `git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm`
     - `tmux source ~/.config/tmux/tmux.conf`
-    - workmux : `mise use -g cargo:raine/workmux`
 - auto theming: `sudo systemctl enable TerminalSystemTheme`
