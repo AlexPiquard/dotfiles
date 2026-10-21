@@ -109,6 +109,7 @@ bindkey '^[[1;5C' forward-word
 if [[ -f $HOME/.cargo/env ]]; then
   . "$HOME/.cargo/env"
 fi
+export CARGO_HOME="$HOME/.config/cargo"
 
 # rustowl
 if [[ -d $HOME/.rustowl ]]; then
