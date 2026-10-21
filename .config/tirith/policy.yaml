@@ -1,8 +1,0 @@
-version: 1
-allowlist:
-  - "127.0.0.1"
-
-severity_overrides:
-  docker_untrusted_registry: CRITICAL
-
-fail_mode: open  # or "closed" for strict environments
