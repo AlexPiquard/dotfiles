@@ -22,8 +22,50 @@ return {
 	{
 		-- move any selection in any direction
 		"nvim-mini/mini.move",
-		event = { "BufReadPost", "BufNewFile" },
-		opts = {},
+		lazy = false,
+		opts = {
+			mappings = {
+				-- define these below to let smart-splits work
+				left = "",
+				right = "",
+				down = "",
+				up = "",
+				line_left = "",
+				line_right = "",
+				line_down = "",
+				line_up = "",
+			},
+		},
+		keys = {
+			{
+				"<M-h>",
+				mode = "v",
+				function()
+					require("mini.move").move_selection("left")
+				end,
+			},
+			{
+				"<M-l>",
+				mode = "v",
+				function()
+					require("mini.move").move_selection("right")
+				end,
+			},
+			{
+				"<M-j>",
+				mode = "v",
+				function()
+					require("mini.move").move_selection("down")
+				end,
+			},
+			{
+				"<M-k>",
+				mode = "v",
+				function()
+					require("mini.move").move_selection("up")
+				end,
+			},
+		}
 	},
 
 	{
