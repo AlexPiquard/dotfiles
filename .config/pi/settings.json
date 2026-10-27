@@ -1,12 +1,13 @@
 {
-  "lastChangelogVersion": "0.99.2",
+  "lastChangelogVersion": "1.4.0",
   "theme": "tokyonight_day/tokyonight_moon",
   "defaultProvider": "huggingface",
   "defaultModel": "deepseek-ai/DeepSeek-V4-Flash-0731",
   "quietStartup": true,
   "packages": [
     "npm:pi-mcp-adapter",
-    "npm:pi-web-access"
+    "npm:pi-web-access",
+    "npm:billion-context"
   ],
   "extensions": [
     "-builtin:mcp"
