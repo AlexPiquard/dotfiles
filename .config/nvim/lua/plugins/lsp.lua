@@ -49,6 +49,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			if client:supports_method("textDocument/codeLens", args.buf) then
 				vim.lsp.codelens.enable(true, { bufnr = args.buf })
 			end
+			-- automatically edit linked code like html tags
+			if client and client:supports_method("textDocument/linkedEditingRange", args.buf) then
+				vim.lsp.linked_editing_range.enable(true, { bufnr = args.buf })
+			end
 		end
 
 		local function opts(desc)

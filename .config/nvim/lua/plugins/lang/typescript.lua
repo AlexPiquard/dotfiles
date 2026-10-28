@@ -1,10 +1,5 @@
 return {
 	{
-		"windwp/nvim-ts-autotag",
-		ft = { "javascript", "typescript", "typescriptreact", "html" },
-		opts = {},
-	},
-	{
 		"dmmulroy/ts-error-translator.nvim",
 		ft = { "typescript", "typescriptreact" },
 	},
