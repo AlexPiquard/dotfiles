@@ -45,6 +45,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			if client:supports_method("textDocument/inlayHint") then
 				vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
 			end
+			-- enable codelens
+			if client:supports_method("textDocument/codeLens", args.buf) then
+				vim.lsp.codelens.enable(true, { bufnr = args.buf })
+			end
 		end
 
 		local function opts(desc)
@@ -56,14 +60,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			require("tiny-code-action").code_action({})
 		end, opts("See available code actions"))
 
-		map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts("Add workspace folder"))
-		map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts("Remove workspace folder"))
-
-		map("n", "<leader>wl", function()
-			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-		end, opts("List workspace folders"))
-
 		map("n", "<leader>T", vim.lsp.buf.type_definition, opts("Go to type definition"))
+
+		map("n", "<leader>cl", vim.lsp.codelens.run, { desc = "Run CodeLens" })
 
 		map("n", "gr", function()
 			Snacks.picker.lsp_references()
@@ -146,10 +145,9 @@ return {
 		config = function(_, opts)
 			for server, config in pairs(opts.servers) do
 				if config then
-					if config == true then
-						config = {}
+					if config ~= true then
+						vim.lsp.config(server, config)
 					end
-					vim.lsp.config(server, config)
 					vim.lsp.enable(server)
 				end
 			end
