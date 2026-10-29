@@ -1,3 +1,5 @@
+local Utils = require("utils")
+
 local function get_mini_icon(ctx)
 	if ctx.source_name == "Path" then
 		local is_unknown_type =
@@ -69,146 +71,155 @@ return {
 	end,
 
 	---@module 'blink.cmp'
-	---@type blink.cmp.Config
-	opts = {
-		snippets = { preset = "luasnip" },
-		cmdline = { enabled = true },
-		appearance = { nerd_font_variant = "normal" },
-		fuzzy = {
-			implementation = "prefer_rust_with_warning",
-		},
-		sources = {
-			default = { "lsp", "snippets", "buffer", "path", --[[ "ripgrep" ]] },
-			per_filetype = {
-				lua = { inherit_defaults = true, "lazydev" },
+	---@type fun(): blink.cmp.Config
+	opts = function()
+		local providers = {
+			lsp = {
+				async = true,
 			},
-			providers = {
-				lsp = {
-					async = true,
-				},
-				lazydev = {
-					name = "LazyDev",
-					module = "lazydev.integrations.blink",
-					-- make lazydev completions top priority (see `:h blink.cmp`)
-					score_offset = 100,
-				},
-				ripgrep = {
-					module = "blink-ripgrep",
-					name = "Ripgrep",
-					---@module "blink-ripgrep"
-					---@type blink-ripgrep.Options
-					opts = {},
-					-- shown last
-					score_offset = -500,
-				},
-				buffer = {
-					score_offset = -1000
-				}
+			-- ripgrep = {
+			-- 	module = "blink-ripgrep",
+			-- 	name = "Ripgrep",
+			-- 	---@module "blink-ripgrep"
+			-- 	---@type blink-ripgrep.Options
+			-- 	opts = {},
+			-- 	-- shown last
+			-- 	score_offset = -500,
+			-- },
+			buffer = {
+				score_offset = -1000,
 			},
-		},
-
-		-- show function parameters
-		signature = { enabled = true },
-
-		keymap = {
-			preset = "default",
-			["<C-k>"] = { "fallback" },
-			["<CR>"] = { "accept", "fallback" },
-			["<C-b>"] = { "scroll_documentation_up", "fallback" },
-			["<C-f>"] = { "scroll_documentation_down", "fallback" },
-			["<Tab>"] = { "select_next", "fallback" },
-			["<S-Tab>"] = { "select_prev", "fallback" },
-		},
-
-		completion = {
-			keyword = { range = "prefix" },
-			ghost_text = { enabled = false },
-			documentation = {
-				auto_show = true,
-				auto_show_delay_ms = 100,
-				window = { border = "single" },
-				treesitter_highlighting = true,
+		}
+		if Utils.is_dotfiles() then
+			providers["lazydev"] = {
+				name = "LazyDev",
+				module = "lazydev.integrations.blink",
+				score_offset = 100,
+			}
+		end
+		return {
+			snippets = { preset = "luasnip" },
+			cmdline = { enabled = true },
+			appearance = { nerd_font_variant = "normal" },
+			fuzzy = {
+				implementation = "prefer_rust_with_warning",
+			},
+			sources = {
+				default = {
+					"lsp",
+					"snippets",
+					"buffer",
+					"path", --[[ "ripgrep" ]]
+				},
+				per_filetype = {
+					lua = { inherit_defaults = true, Utils.is_dotfiles() and "lazydev" or nil },
+				},
+				providers = providers,
 			},
 
-			list = {
-				selection = {
-					preselect = true,
-					auto_insert = false,
-				},
+			-- show function parameters
+			signature = { enabled = true },
+
+			keymap = {
+				preset = "default",
+				["<C-k>"] = { "fallback" },
+				["<CR>"] = { "accept", "fallback" },
+				["<C-b>"] = { "scroll_documentation_up", "fallback" },
+				["<C-f>"] = { "scroll_documentation_down", "fallback" },
+				["<Tab>"] = { "select_next", "fallback" },
+				["<S-Tab>"] = { "select_prev", "fallback" },
 			},
 
-			accept = {
-				auto_brackets = {
-					kind_resolution = {
-						-- fix auto brackets for react
-						blocked_filetypes = {},
+			completion = {
+				keyword = { range = "prefix" },
+				ghost_text = { enabled = false },
+				documentation = {
+					auto_show = true,
+					auto_show_delay_ms = 100,
+					window = { border = "single" },
+					treesitter_highlighting = true,
+				},
+
+				list = {
+					selection = {
+						preselect = true,
+						auto_insert = false,
 					},
 				},
-			},
 
-			menu = {
-				enabled = true,
-				scrollbar = false,
-				border = "single",
-				max_height = 30,
-				draw = {
-					treesitter = { "lsp" },
-					columns = { { "kind_icon" }, { "label", "kind", gap = 1 } },
-					components = {
-						kind_icon = {
-							text = function(ctx)
-								local kind_icon, _ = get_mini_icon(ctx)
-								return kind_icon
-							end,
-							-- (optional) use highlights from mini.icons
-							highlight = function(ctx)
-								local _, hl = get_mini_icon(ctx)
-								-- check for color derived from documentation
-								if ctx.item.source_name == "LSP" then
-									local color_item = require("nvim-highlight-colors").format(
-										ctx.item.documentation,
-										{ kind = ctx.kind }
-									)
-									if color_item and color_item.abbr_hl_group then
-										hl = color_item.abbr_hl_group
+				accept = {
+					auto_brackets = {
+						kind_resolution = {
+							-- fix auto brackets for react
+							blocked_filetypes = {},
+						},
+					},
+				},
+
+				menu = {
+					enabled = true,
+					scrollbar = false,
+					border = "single",
+					max_height = 30,
+					draw = {
+						treesitter = { "lsp" },
+						columns = { { "kind_icon" }, { "label", "kind", gap = 1 } },
+						components = {
+							kind_icon = {
+								text = function(ctx)
+									local kind_icon, _ = get_mini_icon(ctx)
+									return kind_icon
+								end,
+								-- (optional) use highlights from mini.icons
+								highlight = function(ctx)
+									local _, hl = get_mini_icon(ctx)
+									-- check for color derived from documentation
+									if ctx.item.source_name == "LSP" then
+										local color_item = require("nvim-highlight-colors").format(
+											ctx.item.documentation,
+											{ kind = ctx.kind }
+										)
+										if color_item and color_item.abbr_hl_group then
+											hl = color_item.abbr_hl_group
+										end
 									end
-								end
-								return hl
-							end,
-						},
-						kind = {
-							-- (optional) use highlights from mini.icons
-							highlight = function(ctx)
-								local _, hl = get_mini_icon(ctx)
-								return hl
-							end,
-						},
-						label = {
-							text = function(ctx)
-								local highlights_info = require("colorful-menu").blink_highlights(ctx)
-								if highlights_info ~= nil then
-									-- Or you want to add more item to label
-									return highlights_info.label
-								else
-									return ctx.label
-								end
-							end,
-							highlight = function(ctx)
-								local highlights = {}
-								local highlights_info = require("colorful-menu").blink_highlights(ctx)
-								if highlights_info ~= nil then
-									highlights = highlights_info.highlights
-								end
-								for _, idx in ipairs(ctx.label_matched_indices) do
-									table.insert(highlights, { idx, idx + 1, group = "BlinkCmpLabelMatch" })
-								end
-								-- Do something else
-								return highlights
-							end,
+									return hl
+								end,
+							},
+							kind = {
+								-- (optional) use highlights from mini.icons
+								highlight = function(ctx)
+									local _, hl = get_mini_icon(ctx)
+									return hl
+								end,
+							},
+							label = {
+								text = function(ctx)
+									local highlights_info = require("colorful-menu").blink_highlights(ctx)
+									if highlights_info ~= nil then
+										-- Or you want to add more item to label
+										return highlights_info.label
+									else
+										return ctx.label
+									end
+								end,
+								highlight = function(ctx)
+									local highlights = {}
+									local highlights_info = require("colorful-menu").blink_highlights(ctx)
+									if highlights_info ~= nil then
+										highlights = highlights_info.highlights
+									end
+									for _, idx in ipairs(ctx.label_matched_indices) do
+										table.insert(highlights, { idx, idx + 1, group = "BlinkCmpLabelMatch" })
+									end
+									-- Do something else
+									return highlights
+								end,
+							},
 						},
 					},
 				},
 			},
-		},
-	},
+		}
+	end,
 }

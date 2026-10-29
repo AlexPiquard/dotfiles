@@ -1,3 +1,5 @@
+local Utils = require("utils")
+
 return {
 	{
 		{ import = "plugins.lang" },
@@ -11,10 +13,11 @@ return {
 				-- See the configuration section for more details
 				-- Load luvit types when the `vim.uv` word is found
 				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
-				{ path = "LazyVim", words = { "LazyVim" } },
 				{ path = "snacks.nvim", words = { "Snacks" } },
 				{ path = "mini.files", words = { "MiniFiles" } },
 			},
 		},
+		-- enabled only in dotfiles
+		enabled = Utils.is_dotfiles,
 	},
 }
