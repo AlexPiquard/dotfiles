@@ -45,6 +45,12 @@ require("lazy").setup({
 		},
 	},
 
+	dev = {
+		-- Directory where you store your local plugin projects.
+		---@type string | fun(plugin: LazyPlugin): string
+		path = "~/Projets/lua",
+	},
+
 	performance = {
 		rtp = {
 			disabled_plugins = {
