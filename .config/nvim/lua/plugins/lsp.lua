@@ -1,7 +1,8 @@
 -- change diagnostics config like icons in left column of editor
 local x = vim.diagnostic.severity
 vim.diagnostic.config({
-	virtual_text = { prefix = "" },
+	-- Disable Neovim's default virtual text diagnostics (to use tiny-inline-diagnostic)
+	virtual_text = false,
 	signs = { text = { [x.ERROR] = "󰅙", [x.WARN] = "", [x.INFO] = "󰋼", [x.HINT] = "󰌵" } },
 	underline = true,
 	float = { border = "single" },
@@ -12,21 +13,6 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 vim.lsp.config("*", {
 	capabilities = capabilities,
-})
-
--- show lsp progress with "progress messages" (nvim_echo)
-vim.api.nvim_create_autocmd("LspProgress", {
-	callback = function(ev)
-		local value = ev.data.params.value
-		vim.api.nvim_echo({ { value.message or "done" } }, false, {
-			id = "lsp." .. ev.data.client_id,
-			kind = "progress",
-			source = "vim.lsp",
-			title = value.title,
-			status = value.kind ~= "end" and "running" or "success",
-			percent = value.percentage,
-		})
-	end,
 })
 
 -- register mappings when lsp server is attached
@@ -196,7 +182,6 @@ return {
 		},
 		config = function(_, opts)
 			require("tiny-inline-diagnostic").setup(opts)
-			vim.diagnostic.config({ virtual_text = false }) -- Disable Neovim's default virtual text diagnostics
 		end,
 	},
 	{

@@ -24,7 +24,7 @@ return {
 					margin = {
 						horizontal = 2,
 						vertical = 1,
-					}
+					},
 				},
 				render = function(props)
 					local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
@@ -195,11 +195,17 @@ return {
 			require("mini.icons").mock_nvim_web_devicons()
 		end,
 	},
-	-- better fold (zc)
 	{
+		-- better fold (zc)
 		"kevinhwang91/nvim-ufo",
 		event = { "BufReadPost", "BufNewFile" },
 		dependencies = "kevinhwang91/promise-async",
+		opts = {},
+	},
+	{
+		-- lsp progress messages
+		"https://github.com/j-hui/fidget.nvim",
+		lazy = false,
 		opts = {},
 	},
 }
