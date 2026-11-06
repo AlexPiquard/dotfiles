@@ -36,3 +36,7 @@ setw -g window-status-current-format "#[fg=#d0d5e3,bg=#a8aecb,nobold,nounderscor
 # tmux-plugins/tmux-prefix-highlight support
 set -g @prefix_highlight_output_prefix "#[fg=#8c6c3e]#[bg=#d0d5e3]#[fg=#d0d5e3]#[bg=#8c6c3e]"
 set -g @prefix_highlight_output_suffix ""
+
+# float
+set -g popup-style "bg=default"
+set -g popup-border-style "bg=default,fg=#2e7de9"
