@@ -44,9 +44,6 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 # jdtls lombok
 export JDTLS_JVM_ARGS="-javaagent:$HOME/.local/share/nvim/mason/packages/jdtls/lombok.jar"
 
-# mise
-(( $+commands[mise] )) && eval "$(mise activate zsh)"
-
 # starship
 (( $+commands[starship] )) && eval "$(starship init zsh)"
 
@@ -130,6 +127,9 @@ export PI_CODING_AGENT_DIR="$HOME/.config/pi"
 
 # add completion for manually installed things (fpath)
 fpath=( "$HOME"/.config/zsh/completions $fpath )
+
+# mise
+(( $+commands[mise] )) && eval "$(mise activate zsh)"
 
 # zinit
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then

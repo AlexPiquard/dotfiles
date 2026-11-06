@@ -83,6 +83,9 @@ vim.env.PATH = table.concat({ vim.fn.stdpath("data"), "mason", "bin" }, sep) .. 
 opt.foldmethod = "expr"
 opt.foldlevelstart = 99
 
+-- for security
+opt.modeline = false
+
 -- overridden by guess-indent.nvim
 -- vim.cmd('set noexpandtab tabstop=2 shiftwidth=0 softtabstop=0 smarttab')
 

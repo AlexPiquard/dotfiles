@@ -134,13 +134,11 @@ return {
 		},
 		config = function(_, opts)
 			for server, config in pairs(opts.servers) do
-				if config then
-					if config ~= true then
-						vim.lsp.config(server, config)
-					end
-					vim.lsp.enable(server)
+				if config and config ~= true then
+					vim.lsp.config(server, config)
 				end
 			end
+			require("trust").setup_lsp(opts.servers)
 		end,
 	},
 	{
