@@ -125,6 +125,9 @@ export WEATHER_UNITS=metric
 # pi
 export PI_CODING_AGENT_DIR="$HOME/.config/pi"
 
+# ripgrep
+export RIPGREP_CONFIG_PATH="$HOME/.config/.ripgreprc"
+
 # add completion for manually installed things (fpath)
 fpath=( "$HOME"/.config/zsh/completions $fpath )
 

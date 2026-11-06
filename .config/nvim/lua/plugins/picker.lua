@@ -1,212 +1,248 @@
---- hrtime of the last fff picker that was opened, snacks keeps its own in `snacks.picker.resume.state`
---- @type integer?
-local fff_at
+local function default_picker_height()
+	local has_tabline = vim.o.showtabline == 2 or (vim.o.showtabline == 1 and #vim.api.nvim_list_tabpages() > 1)
+	local max_height = vim.o.lines - vim.o.cmdheight - (has_tabline and 1 or 0) - (vim.o.laststatus > 0 and 1 or 0)
+	return math.floor(0.618 * max_height)
+end
 
---- resume the most recently closed picker, whichever plugin it came from
---- @return boolean? true if a picker was resumed
-local function resume_last()
-	local snacks_at = 0
-	for _, state in pairs(require("snacks.picker.resume").state) do
-		snacks_at = math.max(snacks_at, state.added)
+local function start_picker(source, opts, command)
+	opts = vim.tbl_deep_extend("force", { source = source }, opts or {})
+	local pick = require("mini.pick")
+	if command then
+		return pick.builtin.cli({ command = command }, opts)
+	end
+	return pick.start(opts)
+end
+
+local function todos_picker(opts)
+	local Config = require("todo-comments.config")
+	local Highlight = require("todo-comments.highlight")
+	local ns = vim.api.nvim_create_namespace("todo_comments_picker")
+	local pick = require("mini.pick")
+
+	local function make_item(result)
+		local path = result.filename
+		local display_path = vim.fn.fnamemodify(path, ":.")
+		local line = result.line:gsub("\t", string.rep(" ", vim.o.tabstop))
+		local start, finish, raw_kw = Highlight.match(line)
+		local kw = raw_kw and (Config.keywords[raw_kw] or raw_kw)
+		local kw_opts = kw and Config.options.keywords[kw]
+		if not (start and kw_opts) then
+			return
+		end
+
+		local icon = vim.trim(kw_opts.icon or "")
+		local icon_prefix = icon == "" and "" or (icon .. " ")
+		local prefix = string.format("%s%s:%d:%d: ", icon_prefix, display_path, result.lnum, result.col)
+		local text = prefix .. line
+
+		local todo_start = 0
+		local todo_end = todo_start + #icon
+		local kw_start = #prefix + (start - 1)
+		local kw_end = #prefix + (finish - 1)
+
+		return {
+			path = path,
+			lnum = result.lnum,
+			col = result.col,
+			text = text,
+			tag = kw,
+			_todo_start = todo_start,
+			_todo_end = todo_end,
+			_todo_hl = "TodoFg" .. kw,
+			_kw_start = kw_start,
+			_kw_end = kw_end,
+			_kw_hl = "TodoBg" .. kw,
+		}
 	end
 
-	if (fff_at or 0) > snacks_at then
-		return require("fff").resume()
+	local function show(buf_id, items, query)
+		require("mini.pick").default_show(buf_id, items, query)
+		vim.api.nvim_buf_clear_namespace(buf_id, ns, 0, -1)
+		for i, item in ipairs(items) do
+			local row = i - 1
+			local function mark(from, to, hl)
+				if from and to and from < to then
+					pcall(vim.api.nvim_buf_set_extmark, buf_id, ns, row, from, {
+						end_col = to,
+						hl_group = hl,
+					})
+				end
+			end
+			mark(item._todo_start, item._todo_end, item._todo_hl)
+			mark(item._kw_start, item._kw_end, item._kw_hl)
+		end
 	end
-	if snacks_at > 0 then
-		return Snacks.picker.resume() ~= nil
+
+	local function preview(buf_id, item)
+		require("mini.pick").default_preview(buf_id, item)
+		if type(item) == "table" and item.path then
+			local last = vim.api.nvim_buf_line_count(buf_id) - 1
+			pcall(Highlight.highlight, buf_id, 0, last)
+		end
 	end
-	return require("fff").resume() -- nothing was ever used, fall back to fff
+
+	local source = {
+		name = "Todos",
+		show = show,
+		preview = preview,
+		items = function()
+			require("todo-comments.search").search(function(results)
+				local items = {}
+				for _, result in ipairs(results) do
+					local item = make_item(result)
+					if item then
+						items[#items + 1] = item
+					end
+				end
+				pick.set_picker_items(items)
+			end, { disable_not_found_warnings = true })
+		end,
+	}
+	return start_picker(source, opts)
+end
+
+local function git_log_line_picker(opts)
+	local pick = require("mini.pick")
+	local file = vim.api.nvim_buf_get_name(0)
+	if file == "" then
+		vim.notify("Buffer is not a file", vim.log.levels.WARN)
+		return
+	end
+	local line = vim.api.nvim_win_get_cursor(0)[1]
+	local repo = vim.fn.systemlist({ "git", "-C", vim.fn.fnamemodify(file, ":h"), "rev-parse", "--show-toplevel" })[1]
+	if vim.v.shell_error ~= 0 then
+		vim.notify("Not inside a Git repository", vim.log.levels.WARN)
+		return
+	end
+
+	local function preview(buf_id, item)
+		if type(item) ~= "string" then
+			return pick.default_preview(buf_id, item)
+		end
+		local has_parser, parser = pcall(vim.treesitter.get_parser, buf_id, "git", { error = false })
+		has_parser = has_parser and parser ~= nil
+		if has_parser then
+			has_parser = pcall(vim.treesitter.start, buf_id, "git")
+		end
+		if not has_parser then
+			vim.bo[buf_id].syntax = "git"
+		end
+		local lines = vim.fn.systemlist({ "git", "-C", repo, "--no-pager", "show", item:match("^(%S+)") })
+		vim.api.nvim_buf_set_lines(buf_id, 0, -1, false, lines)
+	end
+
+	local function choose(item)
+		local win = (pick.get_picker_state().windows or {}).target
+		if win == nil or not vim.api.nvim_win_is_valid(win) then
+			return
+		end
+		local buf_id = vim.api.nvim_create_buf(true, true)
+		vim.api.nvim_buf_set_name(buf_id, "minipick://" .. buf_id .. "/" .. item:match("^(%S+)"))
+		preview(buf_id, item)
+		vim.bo[buf_id].filetype = "git"
+		vim.api.nvim_win_set_buf(win, buf_id)
+	end
+
+	local command = {
+		"git",
+		"-C",
+		repo,
+		"--no-pager",
+		"log",
+		"--format=format:%h %s (%ch) <%an>",
+		"--abbrev-commit",
+		"--decorate",
+		"--date=short",
+		"--no-show-signature",
+		"--no-patch",
+		"-L",
+		line .. ",+1:" .. file,
+	}
+	local source = { name = "Git log (line)", cwd = repo, preview = preview, choose = choose }
+	return start_picker(source, opts, command)
 end
 
 return {
 	{
-		"folke/snacks.nvim",
-		priority = 900,
-		lazy = false,
-		---@type snacks.config
+		-- picker for everything
+		"nvim-mini/mini.pick",
+		dependencies = {
+			{
+				"nvim-mini/mini.extra",
+				opts = {},
+			},
+		},
 		opts = {
-			animate = { enabled = true },
-			bigfile = { enabled = true },
-			-- open single files quickly
-			quickfile = { enabled = true },
-			bufdelete = { enabled = true },
-			picker = {
-				enabled = true,
-				exclude = { "bin" },
-				sources = {
-					files = { hidden = true },
-					grep = { hidden = true },
-					todo_comments = { hidden = true },
-				},
-				matcher = { smartcase = false },
-				jump = {
-					reuse_win = true,
-				},
-				layout = "custom",
-				layouts = {
-					custom = {
-						layout = {
-							backdrop = false,
-							box = "horizontal",
-							width = 0.8,
-							min_width = 120,
-							height = 0.8,
-							{
-								box = "vertical",
-								border = true,
-								title = "{title} {live} {flags}",
-								{ win = "input", height = 1, border = "bottom" },
-								{ win = "list", border = "none" },
-							},
-							{ win = "preview", title = "{preview}", border = true, width = 0.5 },
-						},
-					},
-				},
-				win = {
-					input = {
-						keys = {
-							-- S-CR cant be made, so we define another keymap
-							["<C-w>"] = { { "pick_win", "jump" }, mode = { "i", "n" } },
-							["<a-o>"] = { "opencode_send", mode = { "n", "i" } },
-						},
-					},
-				},
-				actions = {
-					opencode_send = function(picker) ---@param picker snacks.Picker
-						local items = vim.tbl_map(function(item) ---@param item snacks.picker.Item
-							return item.file
-									and require("opencode").format({
-										path = item.file,
-										from = item.pos,
-										to = item.end_pos,
-									})
-								or item.text
-						end, picker:selected({ fallback = true }))
+			mappings = {
+				scroll_down = "<C-j>", -- instead of <C-f>
+				scroll_up = "<C-k>", -- instead of <C-b>
+			},
+			options = {
+				content_from_bottom = true,
+			},
+			window = {
+				prompt_prefix = " ",
+				config = function()
+					local pick = require("mini.pick")
+					local items = pick.get_picker_items()
+					if items == nil then
+						return {}
+					end
+					local matches = pick.get_picker_matches() or {}
+					local count = #(matches.all_inds or items)
+					if count == 0 then
+						return {}
+					end
+					return { height = math.min(count, default_picker_height()) }
+				end,
+			},
+		},
+		lazy = false,
+		config = function(_, opts)
+			require("mini.pick").setup(opts)
 
-						require("opencode").prompt(table.concat(items, ", ") .. " ")
-					end,
-				},
-			},
-			statuscolumn = { enabled = true },
-			-- just indent visual guides
-			indent = { enabled = true },
-			image = { enabled = true },
-			input = { enabled = true },
-		},
-		keys = {
-			{
-				"<leader>bd",
-				function()
-					Snacks.bufdelete()
-				end,
-				desc = "Delete buffer",
-			},
-			{ "<leader>bD", "<cmd>:bd<cr>", desc = "Delete buffer and window" },
-			{
-				"<leader>bo",
-				function()
-					Snacks.bufdelete.other()
-				end,
-				desc = "Delete other buffers",
-			},
-			{
-				"<leader>bi",
-				function()
-					Snacks.bufdelete.invisible()
-				end,
-				desc = "Delete invisible buffers",
-			},
-			{
-				"<leader>,",
-				function()
-					Snacks.picker.buffers({
-						unloaded = false,
-						win = {
-							input = {
-								keys = {
-									["dd"] = { "bufdelete", mode = { "n" } },
-								},
-							},
-						},
-					})
-				end,
-				desc = "Buffers",
-			},
-		},
-	},
-	{
-		"dmtrKovalenko/fff",
-		init = function()
+			local sized_win
 			vim.api.nvim_create_autocmd("User", {
-				pattern = "FFFOpen",
+				pattern = "MiniPickMatch",
 				callback = function()
-					fff_at = vim.uv.hrtime()
+					local pick = require("mini.pick")
+					local state = pick.get_picker_state()
+					if state == nil or state.windows.main == sized_win then
+						return
+					end
+					sized_win = state.windows.main
+					pick.refresh()
 				end,
 			})
+
+			MiniPick.registry.todos = todos_picker
+			MiniPick.registry.git_log_line = git_log_line_picker
+			MiniPick.registry.diagnostics_buffer = function(local_opts)
+				return require("mini.extra").pickers.diagnostic(
+					vim.tbl_deep_extend("force", local_opts or {}, { scope = "current" })
+				)
+			end
 		end,
-		build = function()
-			-- downloads a prebuilt binary or falls back to cargo build
-			require("fff.download").download_or_build_binary()
-		end,
-		opts = {
-			prompt = "> ",
-			git = {
-				status_text_color = true,
-			},
-			hl = {
-				title = "FloatTitle",
-				git_staged = "GitSignsAdd",
-				git_modified = "GitSignsChange",
-				git_deleted = "GitSignsDelete",
-				git_renamed = "GitSignsChange",
-				git_untracked = "GitSignsUntracked",
-				git_ignored = "Comment",
-				git_sign_staged = "GitSignsAdd",
-				git_sign_staged_selected = "GitSignsAdd",
-				git_sign_modified = "GitSignsChange",
-				git_sign_modified_selected = "GitSignsChange",
-				git_sign_deleted = "GitSignsDelete",
-				git_sign_deleted_selected = "GitSignsDelete",
-				git_sign_renamed = "GitSignsChange",
-				git_sign_renamed_selected = "GitSignsChange",
-				git_sign_untracked = "GitSignsUntracked",
-				git_sign_untracked_selected = "GitSignsUntracked",
-				git_sign_ignored = "Comment",
-				git_sign_ignored_selected = "Comment",
-				winhl = {
-					list = "Normal:NormalFloat,FloatBorder:FloatBorder,FloatTitle:FloatTitle,SignColumn:NormalFloat",
-				},
-			},
-		},
-		lazy = false, -- the plugin lazy-initialises itself
 		keys = {
 			{
 				"<leader>ff",
-				function()
-					require("fff").find_files()
-				end,
-				desc = "Find files",
+				"<cmd>Pick files<cr>",
+				desc = "Pick files",
 			},
 			{
 				"<leader>fg",
-				function()
-					require("fff").live_grep()
-				end,
-				desc = "Live grep",
-			},
-			{
-				"<leader>fw",
-				function()
-					require("fff").live_grep_under_cursor()
-				end,
-				mode = { "n", "x" },
-				desc = "Search current word / selection",
+				"<cmd>Pick grep_live<cr>",
+				desc = "Pick grep live",
 			},
 			{
 				"<leader>fr",
-				resume_last,
+				"<cmd>Pick resume<cr>",
 				desc = "Resume last picker",
+			},
+			{
+				"<leader>,",
+				"<cmd>Pick buffers<cr>",
+				desc = "Buffers",
 			},
 		},
 	},

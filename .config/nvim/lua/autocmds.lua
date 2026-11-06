@@ -44,7 +44,7 @@ vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
 
 -- disable cursorline highlight on specific buffers
 local disable_cursorline_group = vim.api.nvim_create_augroup("DisableCursorline", { clear = true })
-local disabled_filetypes = { "snacks_picker_input", "snacks_dashboard", "opencode_ask" }
+local disabled_filetypes = { "opencode_ask" }
 local disabled_buftypes = { "terminal", "nofile" }
 vim.api.nvim_create_autocmd({ "BufEnter", "FileType" }, {
 	group = disable_cursorline_group,
@@ -54,6 +54,52 @@ vim.api.nvim_create_autocmd({ "BufEnter", "FileType" }, {
 
 		if vim.tbl_contains(disabled_filetypes, ft) or vim.tbl_contains(disabled_buftypes, bt) then
 			vim.opt_local.cursorline = false
+		end
+	end,
+})
+
+-- custom actions available only on the intro buffer
+local intro_group = vim.api.nvim_create_augroup("intro_keymaps", { clear = true })
+local intro_actions = {
+	{
+		key = "s",
+		desc = "Restore session",
+		action = function()
+			require("auto-session").restore_session(nil, { show_message = false })
+		end,
+	},
+	{
+		key = "L",
+		desc = "Lazy",
+		action = "<cmd>Lazy<cr>",
+	},
+}
+
+local function is_intro_buf(buf)
+	return vim.api.nvim_buf_get_name(buf) == "" and vim.bo[buf].buftype == "" and vim.bo[buf].filetype == ""
+end
+
+vim.api.nvim_create_autocmd("VimEnter", {
+	group = intro_group,
+	callback = function()
+		local buf = vim.api.nvim_get_current_buf()
+		if vim.fn.argc() == 0 and is_intro_buf(buf) then
+			vim.b[buf].intro = true
+			for _, item in ipairs(intro_actions) do
+				vim.keymap.set("n", item.key, item.action, { buffer = buf, desc = item.desc })
+			end
+		end
+	end,
+})
+
+vim.api.nvim_create_autocmd({ "BufEnter", "BufReadPost", "BufNewFile", "FileType" }, {
+	group = intro_group,
+	callback = function(args)
+		if vim.b[args.buf].intro and not is_intro_buf(args.buf) then
+			vim.b[args.buf].intro = nil
+			for _, item in ipairs(intro_actions) do
+				pcall(vim.keymap.del, "n", item.key, { buffer = args.buf })
+			end
 		end
 	end,
 })

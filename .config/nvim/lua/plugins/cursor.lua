@@ -22,7 +22,6 @@ return {
 	{
 		-- move any selection in any direction
 		"nvim-mini/mini.move",
-		lazy = false,
 		opts = {
 			mappings = {
 				-- define these below to let smart-splits work
@@ -64,28 +63,6 @@ return {
 				function()
 					require("mini.move").move_selection("up")
 				end,
-			},
-		}
-	},
-
-	{
-		-- animated scrolling
-		"folke/snacks.nvim",
-		priority = 900,
-		lazy = false,
-		---@type snacks.config
-		opts = {
-			scroll = {
-				enabled = true,
-				animate = {
-					duration = { step = 15, total = 100 },
-					easing = "linear",
-				},
-				animate_repeat = {
-					delay = 50,
-					duration = { step = 5, total = 50 },
-					easing = "linear",
-				},
 			},
 		},
 	},
@@ -147,8 +124,27 @@ return {
 	{
 		-- split/join blocks of code
 		"Wansmer/treesj",
-		keys = { "<leader>m" },
+		keys = {
+			{
+				"gt",
+				function()
+					require("treesj").toggle()
+				end,
+				desc = "Split or Join code block",
+			},
+		},
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		opts = {},
+		opts = {
+			use_default_keymaps = false,
+		},
+	},
+
+	{
+		-- scroll animation
+		"karb94/neoscroll.nvim",
+		event = "VeryLazy",
+		opts = {
+			duration_multiplier = 0.5,
+		},
 	},
 }

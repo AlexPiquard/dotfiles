@@ -1,7 +1,7 @@
 return {
 	{
 		"AlexPiquard/translator.nvim",
-		lazy = false,
+		cmd = { "Translate", "TranslateReplace" },
 		---@type Translator.Config
 		opts = {},
 	},

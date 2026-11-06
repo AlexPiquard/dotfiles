@@ -1,6 +1,8 @@
 return {
 	{
+		-- navigate beween nvim and tmux
 		"smart-splits-nvim/smart-splits.nvim",
+		-- not working with lazy
 		lazy = false,
 		dependencies = {
 			{ "smart-splits-nvim/backend-tmux", main = "smart-splits-backend-tmux" },

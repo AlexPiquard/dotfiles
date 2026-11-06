@@ -2,7 +2,7 @@ return {
 	{
 		-- show key mappings
 		"folke/which-key.nvim",
-		lazy = false,
+		event = "VeryLazy",
 		cmd = "WhichKey",
 		opts = {
 			preset = "helix",

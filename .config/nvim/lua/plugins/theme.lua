@@ -147,6 +147,8 @@ return {
 				hl.TabLineFill = { fg = c.fg_sidebar, bg = c.bg }
 				-- Flash
 				hl.FlashLabel = { fg = c.bg, bg = "#d20065" }
+				-- MiniInput
+				hl.MiniInputPrompt = { fg = c.blue2, bg = c.bg_statusline }
 			end,
 			on_colors = function(colors)
 				if vim.o.background == "light" then

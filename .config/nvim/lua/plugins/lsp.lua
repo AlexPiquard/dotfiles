@@ -45,7 +45,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			return { buffer = args.buf, desc = "LSP " .. desc }
 		end
 
-		-- "go to references" is mapped in snacks.picker
 		map({ "n", "v" }, "<leader>ca", function()
 			require("tiny-code-action").code_action({})
 		end, opts("See available code actions"))
@@ -54,22 +53,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 		map("n", "<leader>cl", vim.lsp.codelens.run, { desc = "Run CodeLens" })
 
-		map("n", "gr", function()
-			Snacks.picker.lsp_references()
-		end, opts("References"))
-		map("n", "gd", function()
-			Snacks.picker.lsp_definitions()
-		end, opts("Goto Definition"))
-		map("n", "gD", function()
-			Snacks.picker.lsp_declarations()
-		end, opts("Goto Declaration"))
+		map("n", "gr", "<cmd>Pick lsp scope='references'<cr>", opts("References"))
+		map("n", "gd", "<cmd>Pick lsp scope='definition'<cr>", opts("Goto Definition"))
+		map("n", "gD", "<cmd>Pick lsp scope='declaration'<cr>", opts("Goto Declaration"))
 
-		map("n", "<leader>sd", function()
-			Snacks.picker.diagnostics()
-		end, { desc = "Diagnostics Picker" })
-		map("n", "<leader>sD", function()
-			Snacks.picker.diagnostics_buffer()
-		end, { desc = "Buffer Diagnostics Picker" })
+		map("n", "<leader>sd", "<cmd>Pick diagnostic<cr>", { desc = "Diagnostics Picker" })
+		map("n", "<leader>sD", "<cmd>Pick diagnostics_buffer<cr>", opts("Buffer Diagnostics Picker"))
 	end,
 })
 

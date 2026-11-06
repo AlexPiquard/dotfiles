@@ -30,9 +30,7 @@ return {
 		keys = {
 			{
 				"<leader>st",
-				function()
-					Snacks.picker.todo_comments()
-				end,
+				"<cmd>Pick todos<cr>",
 				desc = "List Todos",
 			},
 		},

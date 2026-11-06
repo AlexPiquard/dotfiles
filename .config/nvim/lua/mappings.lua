@@ -7,12 +7,6 @@ map("i", "<C-l>", "<Right>", { desc = "move right" })
 map("i", "<C-j>", "<Down>", { desc = "move down" })
 map("i", "<C-k>", "<Up>", { desc = "move up" })
 
--- center after move
-map("n", "<C-d>", function()
-	vim.cmd([[execute "normal! \<C-d>"]])
-	vim.cmd("normal! zz")
-end)
-map("n", "<C-u>", "<C-u>zz")
 map("n", "n", "nzz")
 map("n", "N", "Nzz")
 
@@ -27,6 +21,8 @@ vim.keymap.set("n", "<Esc>", function()
 end, { desc = "general clear highlights" })
 
 map("i", "jk", "<ESC>", { desc = "Escape insert mode" })
+
+map("n", "go", "f{a<CR><Esc>O", { desc = "Split and enter" })
 
 -- Diagnostics
 map("n", "<A-b>", function()

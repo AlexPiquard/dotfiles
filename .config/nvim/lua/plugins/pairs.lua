@@ -14,7 +14,7 @@ return {
 		opts = {
 			-- alt-e to add the closing thing after word
 			fast_wrap = {},
-			disable_filetype = { "markdown", "snacks_picker_input" },
+			disable_filetype = { "markdown" },
 			ignored_next_char = [=[[%w%%%'%[%"%.%`%$]]=],
 			-- disable in string
 			enable_bracket_in_quote = false,

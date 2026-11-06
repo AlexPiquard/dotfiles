@@ -43,8 +43,8 @@ o.numberwidth = 2
 -- Hide ruler in statusline
 o.ruler = false
 
--- disable nvim intro
-opt.shortmess:append("sI")
+-- Control display of messages (:h shortmess)
+opt.shortmess:append("s")
 
 -- Always show sign column (prevents layout shift)
 o.signcolumn = "yes"

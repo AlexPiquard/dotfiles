@@ -26,12 +26,28 @@ return {
 		"lambdalisue/vim-suda",
 		cmd = { "SudaRead", "SudaWrite" },
 	},
+
 	{
 		-- Faster opening of big files
 		"pteroctopus/faster.nvim",
 		lazy = false,
 		opts = {},
 	},
+
+	{
+		"nvim-mini/mini.bufremove",
+		opts = {},
+		keys = {
+			{
+				"<leader>bd",
+				function()
+					require("mini.bufremove").delete()
+				end,
+				desc = "Delete buffer",
+			},
+		},
+	},
+
 	{
 		-- automatically reopen buffers
 		"rmagatti/auto-session",
@@ -49,11 +65,23 @@ return {
 			-- suppress session restore/create in certain directories
 			suppressed_dirs = { "~/", "/" },
 			-- no save at all when there is only a dashboard
-			bypass_save_filetypes = { "snacks_dashboard" },
+			bypass_save_filetypes = { "terminal" },
 			-- exclude theses filetypes when saving
 			close_filetypes_on_save = { "checkhealth" },
 			-- dont save hidden buffers
 			pre_save_cmds = { close_hidden_buffers },
+		},
+	},
+
+	{
+		-- show images
+		"3rd/image.nvim",
+		lazy = false,
+		build = false,
+		opts = {
+			processor = "magick_cli",
+			editor_only_render_when_focused = true,
+			tmux_show_only_in_active_window = true,
 		},
 	},
 }

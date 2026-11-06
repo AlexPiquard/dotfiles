@@ -108,6 +108,7 @@ return {
 			})
 		end,
 	},
+
 	{
 		-- cursor line number mode indicator
 		"mawkler/modicator.nvim",
@@ -136,6 +137,7 @@ return {
 			},
 		},
 	},
+
 	{
 		-- Improved UI and workflow for quickfix
 		"stevearc/quicker.nvim",
@@ -182,12 +184,14 @@ return {
 			},
 		},
 	},
+
 	{
 		-- native Undotree
 		dir = vim.fn.expand("$VIMRUNTIME/pack/dist/opt/nvim.undotree"),
 		name = "nvim.undotree",
 		cmd = "Undotree",
 	},
+
 	{
 		"nvim-mini/mini.icons",
 		config = function()
@@ -195,6 +199,7 @@ return {
 			require("mini.icons").mock_nvim_web_devicons()
 		end,
 	},
+
 	{
 		-- better fold (zc)
 		"kevinhwang91/nvim-ufo",
@@ -202,10 +207,47 @@ return {
 		dependencies = "kevinhwang91/promise-async",
 		opts = {},
 	},
+
+	{
+		-- indent visual guides
+		"lukas-reineke/indent-blankline.nvim",
+		event = { "BufReadPost", "BufNewFile" },
+		-- determine main module (the plugin folder is not "indent-blankline" but "ibl")
+		main = "ibl",
+		---@module "ibl"
+		---@type ibl.config
+		opts = {
+			scope = {
+				show_start = false,
+				show_end = false,
+				include = {
+					node_type = {
+						lua = { "function", "if_statement", "for_statement", "while_statement", "table_constructor" },
+					},
+				},
+			},
+		},
+	},
+
+	{
+		-- get input
+		"nvim-mini/mini.input",
+		event = "VeryLazy",
+		config = function(_, opts)
+			local input = require("mini.input")
+			-- place it at center (middle middle)
+			local view_handler = input.gen_view.floatwin({ style = "MM" })
+			input.setup(vim.tbl_deep_extend("force", opts, { handlers = { view = view_handler } }))
+		end,
+		opts = {
+			scope = "editor",
+		},
+	},
+
 	{
 		-- lsp progress messages
 		"https://github.com/j-hui/fidget.nvim",
-		lazy = false,
+		event = "LspAttach",
 		opts = {},
 	},
 }
