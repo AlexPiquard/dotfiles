@@ -4,6 +4,33 @@ local function default_picker_height()
 	return math.floor(0.618 * max_height)
 end
 
+local picker_main_heights = {}
+
+local function picker_height()
+	local pick = require("mini.pick")
+	local state = pick.get_picker_state()
+	if state == nil then
+		return nil
+	end
+	local win = state.windows.main
+	if vim.api.nvim_win_get_buf(win) ~= state.buffers.main then
+		return default_picker_height()
+	end
+	if picker_main_heights[win] == nil then
+		local items = pick.get_picker_items()
+		if items == nil then
+			return nil
+		end
+		local matches = pick.get_picker_matches() or {}
+		local count = #(matches.all_inds or items)
+		if count == 0 then
+			return nil
+		end
+		picker_main_heights[win] = math.min(count, default_picker_height())
+	end
+	return picker_main_heights[win]
+end
+
 local function start_picker(source, opts, command)
 	opts = vim.tbl_deep_extend("force", { source = source }, opts or {})
 	local pick = require("mini.pick")
@@ -11,6 +38,27 @@ local function start_picker(source, opts, command)
 		return pick.builtin.cli({ command = command }, opts)
 	end
 	return pick.start(opts)
+end
+
+local function jump_single_item(pick)
+	local start = pick.start
+	return function(opts)
+		local source = opts and opts.source
+		local items = source and source.items
+		if
+			not pick.is_picker_active()
+			and type(items) == "table"
+			and vim.islist(items)
+			and #items == 1
+			and type(items[1]) == "table"
+		then
+			local name = source.name
+			if type(name) == "string" and (name:match("^LSP %(") or name:match("^Diagnostic %(")) then
+				return pick.default_choose(items[1])
+			end
+		end
+		return start(opts)
+	end
 end
 
 local function todos_picker(opts)
@@ -183,23 +231,47 @@ return {
 			window = {
 				prompt_prefix = " ",
 				config = function()
-					local pick = require("mini.pick")
-					local items = pick.get_picker_items()
-					if items == nil then
+					local height = picker_height()
+					if height == nil then
 						return {}
 					end
-					local matches = pick.get_picker_matches() or {}
-					local count = #(matches.all_inds or items)
-					if count == 0 then
-						return {}
-					end
-					return { height = math.min(count, default_picker_height()) }
+					return { height = height }
 				end,
 			},
 		},
 		lazy = false,
 		config = function(_, opts)
-			require("mini.pick").setup(opts)
+			local pick = require("mini.pick")
+			pick.setup(opts)
+			pick.start = jump_single_item(pick)
+
+			vim.api.nvim_create_autocmd("BufLeave", {
+				callback = function(args)
+					local state = pick.get_picker_state()
+					if state == nil or vim.api.nvim_get_current_win() ~= state.windows.main then
+						return
+					end
+					if args.buf == state.buffers.main then
+						picker_main_heights[state.windows.main] = vim.api.nvim_win_get_height(state.windows.main)
+					end
+				end,
+			})
+
+			vim.api.nvim_create_autocmd("BufEnter", {
+				callback = function()
+					local state = pick.get_picker_state()
+					if state ~= nil and vim.api.nvim_get_current_win() == state.windows.main then
+						pick.refresh()
+					end
+				end,
+			})
+
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "MiniPickStop",
+				callback = function()
+					picker_main_heights = {}
+				end,
+			})
 
 			local sized_win
 			vim.api.nvim_create_autocmd("User", {
