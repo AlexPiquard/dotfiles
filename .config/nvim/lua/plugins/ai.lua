@@ -1,3 +1,21 @@
+local function scroll(up)
+	local pi_pane = require("pi-tmux").get_pi_pane(true)
+
+	if pi_pane then
+		if up then
+			require("pi-tmux").scroll_up(3)
+		else
+			require("pi-tmux").scroll_down(3)
+		end
+	else
+		if up then
+			require("opencode").command("session.half.page.up")
+		else
+			require("opencode").command("session.half.page.down")
+		end
+	end
+end
+
 return {
 	{
 		"nickjvandyke/opencode.nvim",
@@ -37,23 +55,6 @@ return {
 				expr = true,
 				desc = "Append line to OpenCode",
 			},
-			-- TODO: merge with pi's keymap to scroll
-			-- {
-			-- 	"<M-u>",
-			-- 	function()
-			-- 		require("opencode").command("session.half.page.up")
-			-- 	end,
-			-- 	mode = "n",
-			-- 	desc = "Scroll OpenCode up",
-			-- },
-			-- {
-			-- 	"<M-d>",
-			-- 	function()
-			-- 		require("opencode").command("session.half.page.down")
-			-- 	end,
-			-- 	mode = "n",
-			-- 	desc = "Scroll OpenCode down",
-			-- },
 		},
 		config = function()
 			---@type opencode.Opts
@@ -92,18 +93,18 @@ return {
 			{
 				"<M-u>",
 				function()
-					require("pi-tmux").scroll_up(3)
+					scroll(true)
 				end,
 				mode = "n",
-				desc = "Scroll Pi up",
+				desc = "Scroll Pi or OpenCode up",
 			},
 			{
 				"<M-d>",
 				function()
-					require("pi-tmux").scroll_down(3)
+					scroll(false)
 				end,
 				mode = "n",
-				desc = "Scroll Pi down",
+				desc = "Scroll Pi or OpenCode down",
 			},
 		},
 	},

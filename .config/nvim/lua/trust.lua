@@ -83,7 +83,9 @@ function M.notify_untrusted(root)
 	end
 
 	notified[root] = true
-	vim.notify(("LSP disabled: %s is not trusted. Run :Trust to enable it."):format(root), vim.log.levels.WARN)
+	vim.schedule(function()
+		vim.notify(("LSP disabled: %s is not trusted. Run :Trust to enable it."):format(root), vim.log.levels.WARN)
+	end)
 end
 
 function M.enable()

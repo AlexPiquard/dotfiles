@@ -10,6 +10,12 @@ return {
 				{ "<leader>d", group = "Debug" },
 				{ "<leader>f", group = "Finders" },
 			},
+			win = {
+				border = "single",
+			},
+			plugins = {
+				marks = false,
+			},
 		},
 		keys = {
 			{ "<leader>wK", "<cmd>WhichKey <CR>", desc = "whichkey all keymaps" },
