@@ -34,8 +34,13 @@ map("n", "<A-S-b>", function()
 end)
 
 map("n", "<leader>o", function()
-  local dir = vim.fn.expand("%:p:h")
-  if dir ~= "" then
-    vim.ui.open(dir)
-  end
+	local dir = vim.fn.expand("%:p:h")
+	if dir ~= "" then
+		vim.ui.open(dir)
+	end
 end, { desc = "Open folder" })
+
+-- sqlmux
+map("n", "<leader>sv", function()
+	require("utils").open_cmd_win("sqlmux")
+end, { desc = "Open sqlmux" })

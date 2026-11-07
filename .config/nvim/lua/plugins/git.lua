@@ -57,7 +57,7 @@ return {
 		{
 			"<leader>lg",
 			function()
-				open_lazygit()
+				require("utils").open_cmd_win("lazygit")
 			end,
 			desc = "LazyGit",
 		},

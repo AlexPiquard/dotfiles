@@ -10,8 +10,8 @@
     - `chsh -s $(which zsh)` (or `sudo chsh $USER` in fedora)
     - `bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"`
 - install packages
-    - fedora : `./scripts/install-fedora.sh`
-    - mise tools : `./scripts/install-mise-tools.sh`
+    - fedora: `./scripts/install-fedora.sh`
+    - mise tools: `./scripts/install-mise-tools.sh`
 - install fonts (`Recursive` and `Symbols Nerd Font Mono`)
 - symlink dotfiles: `./stow.sh`
 - generate missing completions : `./scripts/completions.sh`
@@ -20,3 +20,4 @@
     - `git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm`
     - `tmux source ~/.config/tmux/tmux.conf`
 - auto theming: `sudo systemctl enable TerminalSystemTheme`
+- sqlmux: `go install github.com/kackerx/sqlmux/cmd/sqlmux@latest`

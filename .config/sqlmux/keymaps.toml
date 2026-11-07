@@ -1,0 +1,2 @@
+[keys.normal]
+"<leader>k" = "window.close"
