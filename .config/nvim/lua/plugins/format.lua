@@ -1,6 +1,7 @@
 return {
 	-- formatting
 	"stevearc/conform.nvim",
+	cmd = { "ConformInfo" },
 	keys = {
 		{
 			"<leader>pp",
@@ -13,6 +14,8 @@ return {
 	},
 	opts = {
 		async = true,
+
+		format_on_save = { timeout_ms = 500 },
 
 		formatters = {
 			topcoat = {
@@ -27,11 +30,11 @@ return {
 
 		formatters_by_ft = {
 			lua = { "stylua" },
-			javascript = { "biome-check" },
-			typescript = { "biome-check" },
-			typescriptreact = { "biome-check" },
-			json = { "biome-check" },
-			jsonc = { "biome-check" },
+			javascript = { "biome", "biome-organize-imports" },
+			typescript = { "biome", "biome-organize-imports" },
+			typescriptreact = { "biome", "biome-organize-imports" },
+			json = { "biome", "biome-organize-imports" },
+			jsonc = { "biome", "biome-organize-imports" },
 			html = { "prettier" },
 			java = { "google-java-format" },
 			rust = { "topcoat", "rustfmt" },

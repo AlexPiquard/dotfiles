@@ -20,8 +20,6 @@ vim.keymap.set("n", "<Esc>", function()
 	vim.cmd("noh")
 end, { desc = "general clear highlights" })
 
-map("i", "jk", "<ESC>", { desc = "Escape insert mode" })
-
 map("n", "go", "f{a<CR><Esc>O", { desc = "Split and enter" })
 
 -- Diagnostics
