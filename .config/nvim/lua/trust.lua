@@ -55,6 +55,7 @@ local function write_whitelist(trusted)
 
 	local file = io.open(state_file, "w")
 	if not file then
+		vim.notify(("Cannot write trust file: %s"):format(state_file), vim.log.levels.WARN)
 		return
 	end
 
@@ -96,15 +97,12 @@ function M.enable()
 	end
 end
 
-function M.disable()
-	for server, config in pairs(servers) do
-		if config then
-			vim.lsp.enable(server, false)
+function M.disable(root)
+	root = normalize(root or M.root())
+	for _, client in ipairs(vim.lsp.get_clients()) do
+		if client.config.root_dir and normalize(client.config.root_dir) == root then
+			client:stop()
 		end
-	end
-
-	for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
-		client:stop()
 	end
 end
 
@@ -140,7 +138,7 @@ function M.untrust(root)
 	write_whitelist(trusted)
 
 	notified[root] = nil
-	M.disable()
+	M.disable(root)
 
 	return root
 end
