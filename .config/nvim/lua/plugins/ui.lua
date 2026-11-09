@@ -246,7 +246,7 @@ return {
 
 	{
 		-- lsp progress messages
-		"https://github.com/j-hui/fidget.nvim",
+		"j-hui/fidget.nvim",
 		event = "LspAttach",
 		opts = {},
 	},

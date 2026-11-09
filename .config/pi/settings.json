@@ -8,8 +8,11 @@
   "followUpMode": "all",
   "packages": [
     "npm:pi-mcp-adapter",
-    "npm:pi-web-access",
-    "npm:context-mode"
+    "npm:context-mode",
+    "git:github.com/DietrichGebert/ponytail",
+    "npm:pi-caveman",
+    "npm:@ollama/pi-web-search",
+    "npm:ollama-graceful"
   ],
   "extensions": [
     "-builtin:mcp"
@@ -17,5 +20,9 @@
   "extensionChangelogVersions": {
     "{\"source\":\"npm:pi-mcp-adapter\",\"scope\":\"user\"}": "7.0.1",
     "{\"source\":\"npm:pi-web-access\",\"scope\":\"user\"}": "0.47.0"
-  }
+  },
+  "enabledModels": [
+    "huggingface/deepseek-ai/DeepSeek-V4-Flash-0731",
+    "ollama/hf.co/unsloth/gemma-4-E4B-it-GGUF:Q3_K_M"
+  ]
 }

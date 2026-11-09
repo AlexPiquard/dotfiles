@@ -6,9 +6,7 @@
           "id": "deepseek-ai/DeepSeek-V4-Flash-0731",
           "name": "DeepSeek V4 Flash 0731",
           "reasoning": true,
-          "input": [
-            "text"
-          ],
+          "input": ["text"],
           "thinkingLevelMap": {
             "off": null,
             "minimal": null,
@@ -34,6 +32,16 @@
       ],
       "api": "openai-completions",
       "baseUrl": "https://router.huggingface.co/v1"
+    },
+    "ollama": {
+      "baseUrl": "http://localhost:11434/v1",
+      "api": "openai-completions",
+      "apiKey": "ollama",
+      "models": [
+        {
+          "id": "hf.co/unsloth/gemma-4-E4B-it-GGUF:Q3_K_M",
+        }
+      ]
     }
   }
 }

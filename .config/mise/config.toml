@@ -1,4 +1,4 @@
-# NOTE: install tools with `mise use --global --env local ...` to not put them in config.toml (which is shared)
+# NOTE: install tools with `mise use -g -p ~/.config/mise/mise.local.toml ...` to not put them in config.toml (which is shared)
 
 [settings]
 paranoid = true
