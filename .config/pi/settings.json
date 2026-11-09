@@ -3,11 +3,13 @@
   "theme": "tokyonight_day/tokyonight_moon",
   "defaultProvider": "huggingface",
   "defaultModel": "deepseek-ai/DeepSeek-V4-Flash-0731",
-  "quietStartup": true,
+  "hideThinkingBlock": true,
+  "steeringMode": "all",
+  "followUpMode": "all",
   "packages": [
     "npm:pi-mcp-adapter",
     "npm:pi-web-access",
-    "npm:billion-context"
+    "npm:context-mode"
   ],
   "extensions": [
     "-builtin:mcp"
