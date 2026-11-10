@@ -121,13 +121,24 @@ return {
 				lua_ls = true,
 			},
 		},
+		dependencies = {
+			{
+				"AlexPiquard/trust.nvim",
+				lazy = false,
+				opts = {},
+			},
+		},
 		config = function(_, opts)
+			local srvs = {}
 			for server, config in pairs(opts.servers) do
-				if config and config ~= true then
-					vim.lsp.config(server, config)
+				if config then
+					table.insert(srvs, server)
+					if config ~= true then
+						vim.lsp.config(server, config)
+					end
 				end
 			end
-			require("trust").setup_lsp(opts.servers)
+			require("trust").setup_lsp(srvs)
 		end,
 	},
 	{
