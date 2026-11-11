@@ -1,0 +1,31 @@
+# This theme is based on Tokyo Night (Copyright (c) 2018-present Enkia, released
+# under the MIT license, https://github.com/tokyo-night/tokyo-night-vscode-theme)
+
+# This uses ansi color codes to adapt to light and dark modes
+
+"comment" = "243"
+"string" = "10"
+"keyword.operator.regexp" = "10"
+"constant.character.escape" = "3"
+"constant.numeric.integer.decimal.file-descriptor" = "3"
+"variable.parameter" = "13"
+"variable.other" = "3"
+"punctuation.definition.variable" = "3"
+"variable.function" = "14"
+"variable.language.tilde" = "13"
+"keyword" = "12"
+"storage" = "12"
+"support" = "14"
+"entity.name.function" = "3"
+"punctuation.section" = "3"
+
+# history expansions
+"meta.group.expansion.history" = "3"
+
+# reset command substitutions to terminal defaults
+"meta.group.expansion.command.parens" = {}
+
+# dynamic items
+"dynamic.callable" = "14"
+"dynamic.callable.missing" = "9"
+"dynamic.path" = { underline = true }

@@ -146,9 +146,11 @@ autoload -Uz _zinit
 # zinit plugins
 zinit wait lucid for \
   atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-    zdharma-continuum/fast-syntax-highlighting \
   blockf \
     zsh-users/zsh-completions
+zinit ice wait"0" lucid as"program" from"gh-r" pick"zsh-patina-*/zsh-patina" \
+  atload'eval "$(zsh-patina activate)" && eval "$(zsh-patina completion)"'
+zinit light michel-kraemer/zsh-patina
 zinit ice wait"0" lucid depth=1 pick"deja.plugin.zsh" \
   atclone"curl -fsSL https://raw.githubusercontent.com/Giammarco-Ferranti/deja/main/install.sh | env -u ZSH_VERSION SHELL=/bin/sh sh && $HOME/.local/bin/deja import" \
   atpull"%atclone"
