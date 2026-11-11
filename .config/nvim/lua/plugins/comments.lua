@@ -47,10 +47,13 @@ return {
 				},
 			},
 		},
-		config = function()
-			require("Comment").setup({
-				pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
-			})
+		config = function(_, opts)
+			local ts_pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook()
+			require("Comment").setup(vim.tbl_deep_extend("force", opts, {
+				pre_hook = function(ctx)
+					return ts_pre_hook(ctx) or vim.bo.commentstring
+				end,
+			}))
 		end,
 	},
 }

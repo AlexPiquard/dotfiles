@@ -1,3 +1,8 @@
+# Add this to $XDG_DATA_HOME/cargo/config.toml to use this config
+# include = [
+#     "../../../.config/cargo/config.toml",
+# ]
+
 [build]
 rustc-wrapper = "sccache"
 

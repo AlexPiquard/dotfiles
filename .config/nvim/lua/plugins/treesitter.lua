@@ -15,6 +15,7 @@ local languages = {
 	"rust",
 	"yaml",
 	"xml",
+	"toml",
 	"zsh",
 	"bash",
 	"regex",
