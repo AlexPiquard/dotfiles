@@ -22,7 +22,6 @@ setopt INC_APPEND_HISTORY
 
 export PATH="$PATH:$HOME/.local/bin:$HOME/bin"
 
-# You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
@@ -51,8 +50,8 @@ export JDTLS_JVM_ARGS="-javaagent:$HOME/.local/share/nvim/mason/packages/jdtls/l
 (( $+commands[fzf] )) && source <(fzf --zsh)
 
 update_fzf_theme() {
-  if [ -f "$HOME/.config/fzf/theme.sh" ]; then
-    source "$HOME/.config/fzf/theme.sh"
+  if [ -f "$XDG_CONFIG_HOME/fzf/theme.sh" ]; then
+    source "$XDG_CONFIG_HOME/fzf/theme.sh"
   fi
 }
 ## fzf: apply theme when using "fzf" command
@@ -83,7 +82,7 @@ export PATH="$PATH:$HOME/go/bin"
 export PKG_CONFIG_PATH="/usr/share/pkgconfig:/usr/lib/x86_64-linux-gnu/pkgconfig"
 
 # 1password gitea plugin for tea cli
-[[ ! -f $HOME/.config/op/plugins.sh ]] || source $HOME/.config/op/plugins.sh
+[[ ! -f $XDG_CONFIG_HOME/op/plugins.sh ]] || source $XDG_CONFIG_HOME/op/plugins.sh
 
 # aliases
 alias ls='eza --icons=always --group-directories-first'
@@ -103,33 +102,31 @@ bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
 
 # rust
-if [[ -f $HOME/.cargo/env ]]; then
-  . "$HOME/.cargo/env"
+if [[ -f $XDG_DATA_HOME/cargo/env ]]; then
+  . "$XDG_DATA_HOME/cargo/env"
 fi
-export CARGO_HOME="$HOME/.config/cargo"
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 
 # rustowl
-if [[ -d $HOME/.rustowl ]]; then
-  export PATH="$PATH:$HOME/.rustowl"
+if [[ -d $XDG_DATA_HOME/rustowl ]]; then
+  export PATH="$PATH:$XDG_DATA_HOME/rustowl"
 fi
 
 # gstreamer
 export GST_PLUGIN_PATH="/usr/lib/x86_64-linux-gnu/gstreamer-1.0/"
 
-# deno
-[ -s $HOME/.deno/env ] && . "$HOME/.deno/env"
-
 # linecast
 export WEATHER_UNITS=metric
 
 # pi
-export PI_CODING_AGENT_DIR="$HOME/.config/pi"
+export PI_CODING_AGENT_DIR="$XDG_CONFIG_HOME/pi"
 
 # ripgrep
-export RIPGREP_CONFIG_PATH="$HOME/.config/.ripgreprc"
+export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/.ripgreprc"
 
 # add completion for manually installed things (fpath)
-fpath=( "$HOME"/.config/zsh/completions $fpath )
+fpath=( "$XDG_CONFIG_HOME"/zsh/completions $fpath )
 
 # mise
 (( $+commands[mise] )) && eval "$(mise activate zsh)"
