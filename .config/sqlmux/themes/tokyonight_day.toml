@@ -1,0 +1,51 @@
+bg          = "#d0d5e3"   # tab bar (the gaps take `gap`, which follows pane_bg)
+pane_bg     = "#e1e2e7"   # pane background
+fg          = "#365fa6"
+fg_muted    = "#555f8d"
+dim         = "#727ab0"
+border      = "#727ab0"   # unfocused border
+focus       = "#506138"   # focused border, NORMAL
+warn        = "#815b00"
+cursor      = "#5679e4"   # current cell, like nvim's highlight of the word under the cursor
+cursor_blur = "#babfd4"   # current cell while the pane is unfocused
+select      = "#92a2dd"   # the selected item in a list
+row         = "#c4c8da"   # current row, a step darker than the current cell so the two stay apart
+row_alt     = "#d0d5e3"   # grid zebra stripes
+visual      = "#a2afe4"   # a query's VISUAL selection and an input box's select-all, a step lighter than the current row
+selected    = "#c4a049"   # records selected for good on a table
+bar         = "#c4c8da"   # status bar, toasts
+sep         = "#babfd4"
+edited_bg   = "#d9cdb6"
+keyword     = "#9f46ff"
+info        = "#18687a"
+error       = "#ff053b"
+pk          = "#287769"
+func        = "#0078e9"   # column headers
+
+error_bg    = "#e0c9d5"
+match       = "#bf5700"
+search      = "#8e5427"
+search_current = "#815b00"
+zoom        = "#815b00"
+border_focus = "#506138"
+gap          = "#e1e2e7"
+production   = "#ff053b"
+
+# SQL in a query and the WHERE box
+sql_table    = "#007ab4"  # table names
+sql_column   = "#287769"  # column names
+sql_operator = "#006a83"  # operators and punctuation: = <> * ; , ( )
+yank         = "#815b00"  # the flash background when yanking
+
+# grid cells colored by column type
+number      = "#bf5700"   # int, numeric, float, ...
+string      = "#365fa6"   # text, varchar, ...
+time        = "#365fa6"   # date, timestamp, timestamptz, interval, ...
+bool        = "#365fa6"
+json        = "#365fa6"
+
+# Icons: text replaces the glyph, fg the color; either alone is fine. Unset ones come from the
+# icons = "nerd" set in config.toml. Names: schema table data query filter search keys conn key postgres
+[icon]
+query = { text = "\uf489", fg = "#386c72" }   # nf-oct-terminal, the boxed terminal glyph
+table   = { fg = "#516c37" }

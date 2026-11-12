@@ -27,3 +27,6 @@ $UPDATE_SCRIPT "$theme" "fzf/%s.sh"
 
 # eza
 $UPDATE_SCRIPT "$theme" "eza/%s.yml"
+
+# sqlmux
+$UPDATE_SCRIPT "$theme" "sqlmux/themes/%s.toml"
