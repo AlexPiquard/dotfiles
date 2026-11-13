@@ -1,7 +1,8 @@
 return {
 	{
 		-- Highlight, list and search todo comments
-		"folke/todo-comments.nvim",
+		"shirohana/todo-comments.nvim",
+		branch = "fix/wide-keyword-end-col-clamp",
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = {
@@ -21,7 +22,7 @@ return {
 				TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
 			},
 			highlight = {
-				pattern = [[.*<(KEYWORDS)\s*]],
+				pattern = [[.*<(KEYWORDS)\s*:?]],
 			},
 			search = {
 				pattern = [[\b(KEYWORDS)\b]],
