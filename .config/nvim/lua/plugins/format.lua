@@ -21,9 +21,17 @@ return {
 			topcoat = {
 				command = "topcoat",
 				args = { "fmt", "--stdin" },
-				require_cwd = true,
-				cwd = function(self, ctx)
-					return require("conform.util").root_file({ "Topcoat.toml" })(self, ctx)
+				condition = function(self, ctx)
+					local cargo_toml = vim.fs.find("Cargo.toml", { path = ctx.filename, upward = true })[1]
+					if not cargo_toml then
+						return false
+					end
+					for line in io.lines(cargo_toml) do
+						if line:match("^topcoat%s*=") or line:match('^"topcoat"%s*=') then
+							return true
+						end
+					end
+					return false
 				end,
 			},
 		},

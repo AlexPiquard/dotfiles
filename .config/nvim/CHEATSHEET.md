@@ -94,11 +94,9 @@
 
 - something detecting malicious/dangerous code when opening project (eval, etc)
 - make gd opens the already visible buffer (even in other tab) (not working for tabs)
-- todo-comments errors without the ending ":"
 - disable highlight for color words in comments
 - fix the diff viewer for opencode in nvim : not always visible, and in one buffer
-- sesh ? to select folders with fzf and open them in a tmux session or with workmux
 - use .config/zsh/.zshenv for PATH, EDITOR
 - first dotfiles install with stow should not have the .config folders symlinked ? (except nvim)
-- https://github.com/jmbuhr/otter.nvim ? to add lsp in parts of documents (like markdown ?)
+    - "themes" subfolders should not be symlinked too, only the content
 - handle multiple repo inside nvim (mainly lsp)
