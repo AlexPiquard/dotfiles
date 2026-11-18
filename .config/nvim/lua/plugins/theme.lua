@@ -149,6 +149,9 @@ return {
 				hl.FlashLabel = { fg = c.bg, bg = "#d20065" }
 				-- MiniInput
 				hl.MiniInputPrompt = { fg = c.blue2, bg = c.bg_statusline }
+				-- Treesitter context
+				hl.TreesitterContext = { bg = c.bg }
+				hl.TreesitterContextSeparator = { fg = c.fg_gutter }
 			end,
 			on_colors = function(colors)
 				if vim.o.background == "light" then

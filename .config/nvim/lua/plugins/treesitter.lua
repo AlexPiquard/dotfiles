@@ -99,8 +99,14 @@ return {
 					end
 					vim.keymap.set("n", key, fn)
 				end
-
 			end,
+		},
+		{
+			"nvim-treesitter/nvim-treesitter-context",
+			opts = {
+				multiwindow = true,
+				separator = "─",
+			},
 		},
 	},
 	build = ":TSUpdate",
