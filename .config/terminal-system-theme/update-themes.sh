@@ -9,7 +9,7 @@ UPDATE_SCRIPT=~/.config/terminal-system-theme/update-theme.sh
 
 # tmux
 $UPDATE_SCRIPT "$theme" "tmux/%s.tmux"
-tmux source ~/.config/tmux/theme.tmux
+command -v tmux >/dev/null 2>&1 && tmux source ~/.config/tmux/theme.tmux
 
 # kitty
 $UPDATE_SCRIPT "$theme" "kitty/%s.conf"
@@ -20,7 +20,7 @@ fi
 
 # alacritty
 $UPDATE_SCRIPT "$theme" "alacritty/%s.toml"
-touch --no-dereference ~/.config/alacritty/alacritty.toml
+command -v alacritty >/dev/null 2>&1 && touch --no-dereference ~/.config/alacritty/alacritty.toml
 
 # fzf
 $UPDATE_SCRIPT "$theme" "fzf/%s.sh"
