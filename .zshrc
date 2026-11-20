@@ -101,6 +101,9 @@ bindkey '^[[3;5~' kill-word
 bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
 
+# Ctrl-L is not longer cleaning
+bindkey -r '^L'
+
 # rust
 if [[ -f $XDG_DATA_HOME/cargo/env ]]; then
   . "$XDG_DATA_HOME/cargo/env"
