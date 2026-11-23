@@ -275,11 +275,15 @@ return {
 
 			local sized_win
 			vim.api.nvim_create_autocmd("User", {
-				pattern = "MiniPickMatch",
+				pattern = "MiniPickStart,MiniPickMatch",
 				callback = function()
 					local pick = require("mini.pick")
 					local state = pick.get_picker_state()
 					if state == nil or state.windows.main == sized_win then
+						return
+					end
+					local items = pick.get_picker_items()
+					if items == nil or #items == 0 then
 						return
 					end
 					sized_win = state.windows.main
